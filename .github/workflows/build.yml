@@ -31,3 +31,21 @@ jobs:
         only-new-issues: true
     - name: 🧪 Unit tests
       run: cd sdk && go test ./...
+  k8s:
+    runs-on: ubuntu-latest
+    steps:
+    - name: ⬇️ Checkout
+      uses: actions/checkout@v5
+    - name: ⬇️ Install Go
+      uses: actions/setup-go@v6
+      with:
+        go-version: '1.25'
+    - name: 🔎 golangci-lint
+      uses: golangci/golangci-lint-action@v9
+      with:
+        version: v2.7.1
+        working-directory: k8s
+        args: --timeout=300s
+        only-new-issues: true
+    - name: 🧪 Unit tests
+      run: cd k8s && go test ./...

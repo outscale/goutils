@@ -29,3 +29,23 @@ func HasPrefix(tags []osc.ResourceTag, prefix string) (suffix, value string, fou
 	}
 	return "", "", false
 }
+
+// GetValue returns a tag value.
+func GetValue(tags []osc.ResourceTag, k string) (string, bool) {
+	for _, t := range tags {
+		if t.Key == k {
+			return t.Value, true
+		}
+	}
+	return "", false
+}
+
+// GetName returns the name of the resource (stored in the Name tag).
+func GetName(tags []osc.ResourceTag) (string, bool) {
+	return GetValue(tags, "Name")
+}
+
+// Must skips the last bool of a result.
+func Must(v string, _ bool) string {
+	return v
+}
