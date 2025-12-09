@@ -4,7 +4,7 @@ go 1.25.3
 
 require (
 	github.com/outscale/osc-sdk-go/v3 v3.0.0-alpha.5.0.20251208144909-6bfa7f03b8b7
-	github.com/stretchr/testify v1.10.0
+	github.com/stretchr/testify v1.11.1
 	go.uber.org/mock v0.6.0
 )
 
