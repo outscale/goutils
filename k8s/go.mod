@@ -4,7 +4,7 @@ go 1.25.3
 
 require (
 	github.com/outscale/goutils/sdk v0.0.0-20251209145113-16dee2cf589f
-	github.com/outscale/osc-sdk-go/v3 v3.0.0-alpha.5.0.20251209101643-c8b43162a7d2
+	github.com/outscale/osc-sdk-go/v3 v3.0.0-alpha.5.0.20251212105032-bb206eef5c8c
 	github.com/stretchr/testify v1.11.1
 )
 
