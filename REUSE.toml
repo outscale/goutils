@@ -10,6 +10,6 @@ SPDX-FileCopyrightText = "2025 Outscale SAS <opensource@outscale.com>"
 SPDX-License-Identifier = "BSD-3-Clause"
 
 [[annotations]]
-path = ["**.md"]
+path = ["**.md", ".gitignore"]
 SPDX-FileCopyrightText = "2025 Outscale SAS <opensource@outscale.com>"
 SPDX-License-Identifier = "CC-BY-4.0"
