@@ -99,3 +99,13 @@ func GetRegion(ctx context.Context) (string, error) {
 	}
 	return subregion[0 : len(subregion)-1], nil
 }
+
+// GetInstanceID fetches the instance ID from the metadata server.
+func GetInstanceID(ctx context.Context) (string, error) {
+	svc := NewService(http.DefaultClient)
+	instanceID, err := svc.fetchInstanceID(ctx)
+	if err != nil {
+		return "", err
+	}
+	return instanceID, nil
+}
