@@ -51,7 +51,9 @@ go get github.com/outscale/goutils/sdk
 
 © 2025 Outscale SAS
 
-See [LICENSE](./LICENSE) for full details.
+This project complies with the [REUSE Specification](https://reuse.software/).
+
+See [LICENSES/](./LICENSES) directory for full license information.
 
 ---
 

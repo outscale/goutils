@@ -3,12 +3,12 @@ module github.com/outscale/goutils/k8s
 go 1.25.3
 
 require (
-	github.com/outscale/goutils/sdk v0.0.0-20251209145113-16dee2cf589f
+	github.com/outscale/goutils/sdk v0.0.0-20251212160151-707c8139eb82
 	github.com/outscale/osc-sdk-go/v3 v3.0.0-alpha.5.0.20251212105032-bb206eef5c8c
 	github.com/stretchr/testify v1.11.1
 )
 
-replace github.com/outscale/goutils/sdk => ../sdk
+// replace github.com/outscale/goutils/sdk => ../sdk
 
 require (
 	dario.cat/mergo v1.0.2 // indirect

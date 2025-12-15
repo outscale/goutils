@@ -13,6 +13,14 @@ permissions:
   contents: read
 
 jobs:
+  reuse:
+    runs-on: ubuntu-latest
+    steps:
+    - name: ⬇️ Checkout repository
+      uses: actions/checkout@v5
+    - name: 🔎 Reuse check
+      run: |
+        docker run --rm --volume $PWD:/data fsfe/reuse:5.1 lint
   sdk:
     runs-on: ubuntu-latest
     steps:
