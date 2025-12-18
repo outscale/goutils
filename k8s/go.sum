@@ -28,6 +28,8 @@ github.com/outscale/goutils/sdk v0.0.0-20251215131223-5c9ce55faa2b h1:9Dw/o4QPbO
 github.com/outscale/goutils/sdk v0.0.0-20251215131223-5c9ce55faa2b/go.mod h1:Gxtjq/xdYAHyl2PHwzW7DzpMErmhncPpbfamlKNj7OI=
 github.com/outscale/osc-sdk-go/v3 v3.0.0-alpha.5.0.20251212105032-bb206eef5c8c h1:bVvJLM59Bo2Lw+sEsLK0VgNyu6iGYwW57kRYIyTpoXI=
 github.com/outscale/osc-sdk-go/v3 v3.0.0-alpha.5.0.20251212105032-bb206eef5c8c/go.mod h1:+UWiUEbhmj8HUyhoGjmve0WKDezaEirKskWoYk5euTc=
+github.com/outscale/osc-sdk-go/v3 v3.0.0-alpha.6 h1:O7CAMS6Ca9mW3zeBcqXT4O3cCR5avMdy0gb9ZkYpj+E=
+github.com/outscale/osc-sdk-go/v3 v3.0.0-alpha.6/go.mod h1:6jEsGMSa+RSmzcUrouoZEYlykZuZPszOVkBU4pzKC0Q=
 github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 h1:Jamvg5psRIccs7FGNTlIRMkT8wgtp5eCXdBlqhYGL6U=
 github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/spf13/pflag v1.0.10 h1:4EBh2KAYBwaONj6b2Ye1GiHfwjqyROoF4RwYO+vPwFk=
