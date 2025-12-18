@@ -7,7 +7,9 @@
   "labels": [
     "dependencies"
   ],
-  "commitMessage": "⬆️ {{{commitMessagePrefix}}} {{{commitMessageAction}}} {{{commitMessageTopic}}} {{{commitMessageExtra}}} {{{commitMessageSuffix}}}",
+  "semanticCommits": "enabled",
+  "semanticCommitType": "⬆️ deps",
+  "semanticCommitScope": "{{manager}}",
   "packageRules": [
     {
       "matchManagers": [
