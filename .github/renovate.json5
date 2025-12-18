@@ -8,9 +8,14 @@
     "dependencies"
   ],
   "semanticCommits": "enabled",
-  "semanticCommitType": "⬆️ deps",
-  "semanticCommitScope": "{{manager}}",
   "packageRules": [
+    {
+      "matchFileNames": [
+        "**/*"
+      ],
+      "semanticCommitType": "⬆️ deps",
+      "semanticCommitScope": "{{manager}}"
+    },
     {
       "matchManagers": [
         "github-actions"
