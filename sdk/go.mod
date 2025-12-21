@@ -3,7 +3,7 @@ module github.com/outscale/goutils/sdk
 go 1.25.3
 
 require (
-	github.com/outscale/osc-sdk-go/v3 v3.0.0-alpha.5.0.20251212105032-bb206eef5c8c
+	github.com/outscale/osc-sdk-go/v3 v3.0.0-beta.2
 	github.com/stretchr/testify v1.11.1
 	go.uber.org/mock v0.6.0
 )
