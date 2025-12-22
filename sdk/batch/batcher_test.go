@@ -14,7 +14,7 @@ import (
 	"time"
 
 	"github.com/outscale/goutils/sdk/batch"
-	"github.com/outscale/goutils/sdk/mock_osc"
+	"github.com/outscale/goutils/sdk/mocks_osc"
 	"github.com/outscale/osc-sdk-go/v3/pkg/osc"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -24,7 +24,7 @@ import (
 func TestBatcherById_Volumes(t *testing.T) {
 	t.Run("When concurrent calls are made, the right status is returned to the right volume", func(t *testing.T) {
 		mockCtrl := gomock.NewController(t)
-		mockSDK := mock_osc.NewMockClient(mockCtrl)
+		mockSDK := mocks_osc.NewMockClient(mockCtrl)
 		mockSDK.EXPECT().ReadVolumes(gomock.Any(), gomock.Cond(func(req osc.ReadVolumesRequest) bool {
 			return len(*req.Filters.VolumeIds) == 4
 		})).Return(&osc.ReadVolumesResponse{Volumes: &[]osc.Volume{
@@ -60,7 +60,7 @@ func TestBatcherById_Volumes(t *testing.T) {
 	})
 	t.Run("ErrNotFound is returned if a volume does not exist anymore", func(t *testing.T) {
 		mockCtrl := gomock.NewController(t)
-		mockSDK := mock_osc.NewMockClient(mockCtrl)
+		mockSDK := mocks_osc.NewMockClient(mockCtrl)
 		mockSDK.EXPECT().ReadVolumes(gomock.Any(), gomock.Any()).Return(&osc.ReadVolumesResponse{Volumes: &[]osc.Volume{}}, nil).MinTimes(1)
 
 		rw := batch.NewVolumeBatcherByID(time.Second, mockSDK)
@@ -77,7 +77,7 @@ func TestBatcherById_Volumes(t *testing.T) {
 	})
 	t.Run("Errors are returned", func(t *testing.T) {
 		mockCtrl := gomock.NewController(t)
-		mockSDK := mock_osc.NewMockClient(mockCtrl)
+		mockSDK := mocks_osc.NewMockClient(mockCtrl)
 		mockSDK.EXPECT().ReadVolumes(gomock.Any(), gomock.Any()).Return(&osc.ReadVolumesResponse{Volumes: &[]osc.Volume{
 			{VolumeId: "id-error"},
 		}}, nil).MinTimes(1)
@@ -105,7 +105,7 @@ func TestBatcherSameQuery_Volumes(t *testing.T) {
 			{VolumeId: "id-baz", State: osc.VolumeStateAvailable},
 		}
 		mockCtrl := gomock.NewController(t)
-		mockSDK := mock_osc.NewMockClient(mockCtrl)
+		mockSDK := mocks_osc.NewMockClient(mockCtrl)
 		mockSDK.EXPECT().ReadVolumes(gomock.Any(), gomock.Eq(req)).Return(&osc.ReadVolumesResponse{Volumes: res}, nil)
 		rw := batch.NewVolumeBatcherSameQuery(time.Second, mockSDK)
 		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
@@ -128,7 +128,7 @@ func TestBatcherSameQuery_Volumes(t *testing.T) {
 func TestBatcherById_Snapshots(t *testing.T) {
 	t.Run("When concurrent calls are made, the right status is returned to the right snapshot", func(t *testing.T) {
 		mockCtrl := gomock.NewController(t)
-		mockSDK := mock_osc.NewMockClient(mockCtrl)
+		mockSDK := mocks_osc.NewMockClient(mockCtrl)
 		mockSDK.EXPECT().ReadSnapshots(gomock.Any(), gomock.Cond(func(req osc.ReadSnapshotsRequest) bool {
 			return len(*req.Filters.SnapshotIds) == 4
 		})).Return(&osc.ReadSnapshotsResponse{Snapshots: &[]osc.Snapshot{
@@ -164,7 +164,7 @@ func TestBatcherById_Snapshots(t *testing.T) {
 	})
 	t.Run("ErrNotFound is returned if a snapshot does not exist anymore", func(t *testing.T) {
 		mockCtrl := gomock.NewController(t)
-		mockSDK := mock_osc.NewMockClient(mockCtrl)
+		mockSDK := mocks_osc.NewMockClient(mockCtrl)
 		mockSDK.EXPECT().ReadSnapshots(gomock.Any(), gomock.Any()).Return(&osc.ReadSnapshotsResponse{Snapshots: &[]osc.Snapshot{}}, nil).MinTimes(1)
 
 		rw := batch.NewSnapshotBatcherByID(time.Second, mockSDK)
@@ -181,7 +181,7 @@ func TestBatcherById_Snapshots(t *testing.T) {
 	})
 	t.Run("Errors are returned", func(t *testing.T) {
 		mockCtrl := gomock.NewController(t)
-		mockSDK := mock_osc.NewMockClient(mockCtrl)
+		mockSDK := mocks_osc.NewMockClient(mockCtrl)
 		mockSDK.EXPECT().ReadSnapshots(gomock.Any(), gomock.Any()).Return(&osc.ReadSnapshotsResponse{Snapshots: &[]osc.Snapshot{
 			{SnapshotId: "id-error"},
 		}}, nil).MinTimes(1)
@@ -209,7 +209,7 @@ func TestBatcherSameQuery_Snapshots(t *testing.T) {
 			{SnapshotId: "id-baz", State: osc.SnapshotStatePending},
 		}
 		mockCtrl := gomock.NewController(t)
-		mockSDK := mock_osc.NewMockClient(mockCtrl)
+		mockSDK := mocks_osc.NewMockClient(mockCtrl)
 		mockSDK.EXPECT().ReadSnapshots(gomock.Any(), gomock.Eq(req)).Return(&osc.ReadSnapshotsResponse{Snapshots: res}, nil)
 		rw := batch.NewSnapshotBatcherSameQuery(time.Second, mockSDK)
 		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
@@ -232,7 +232,7 @@ func TestBatcherSameQuery_Snapshots(t *testing.T) {
 func TestBatcherById_Vms(t *testing.T) {
 	t.Run("When concurrent calls are made, the right status is returned to the right Vm", func(t *testing.T) {
 		mockCtrl := gomock.NewController(t)
-		mockSDK := mock_osc.NewMockClient(mockCtrl)
+		mockSDK := mocks_osc.NewMockClient(mockCtrl)
 		mockSDK.EXPECT().ReadVms(gomock.Any(), gomock.Cond(func(req osc.ReadVmsRequest) bool {
 			return len(*req.Filters.VmIds) == 4
 		})).Return(&osc.ReadVmsResponse{Vms: &[]osc.Vm{
@@ -268,7 +268,7 @@ func TestBatcherById_Vms(t *testing.T) {
 	})
 	t.Run("ErrNotFound is returned if a Vm does not exist anymore", func(t *testing.T) {
 		mockCtrl := gomock.NewController(t)
-		mockSDK := mock_osc.NewMockClient(mockCtrl)
+		mockSDK := mocks_osc.NewMockClient(mockCtrl)
 		mockSDK.EXPECT().ReadVms(gomock.Any(), gomock.Any()).Return(&osc.ReadVmsResponse{Vms: &[]osc.Vm{}}, nil).MinTimes(1)
 
 		rw := batch.NewVmBatcherByID(time.Second, mockSDK)
@@ -285,7 +285,7 @@ func TestBatcherById_Vms(t *testing.T) {
 	})
 	t.Run("Errors are returned", func(t *testing.T) {
 		mockCtrl := gomock.NewController(t)
-		mockSDK := mock_osc.NewMockClient(mockCtrl)
+		mockSDK := mocks_osc.NewMockClient(mockCtrl)
 		mockSDK.EXPECT().ReadVms(gomock.Any(), gomock.Any()).Return(&osc.ReadVmsResponse{Vms: &[]osc.Vm{
 			{VmId: "id-error"},
 		}}, nil).MinTimes(1)
@@ -313,7 +313,7 @@ func TestBatcherSameQuery_Vms(t *testing.T) {
 			{VmId: "id-baz", State: osc.VmStateRunning},
 		}
 		mockCtrl := gomock.NewController(t)
-		mockSDK := mock_osc.NewMockClient(mockCtrl)
+		mockSDK := mocks_osc.NewMockClient(mockCtrl)
 		mockSDK.EXPECT().ReadVms(gomock.Any(), gomock.Eq(req)).Return(&osc.ReadVmsResponse{Vms: res}, nil)
 		rw := batch.NewVmBatcherSameQuery(time.Second, mockSDK)
 		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
