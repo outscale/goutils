@@ -19,7 +19,7 @@ const (
 	DefaultRetryWaitMin = time.Second
 	// DefaultRetryWaitMax defines the max wait between retries
 	DefaultRetryWaitMax = 30 * time.Second
-	// DefaultRetryCount defines the max number of tries.
+	// DefaultRetryCount defines the max number of retries.
 	DefaultRetryCount = 5
 )
 
@@ -35,7 +35,7 @@ func (o *Options) AddFlags(fs *pflag.FlagSet) {
 	fs.IntVar(&o.RateLimit, "oapi-rate-limit", DefaultRateLimit, "Maximum rate of Outscale API calls (per second)")
 	fs.DurationVar(&o.RetryWaitMin, "oapi-retry-wait-min", DefaultRetryWaitMin, "Minimum wait between retries")
 	fs.DurationVar(&o.RetryWaitMax, "oapi-retry-wait-max", DefaultRetryWaitMax, "Maximum wait between retries")
-	fs.IntVar(&o.RetryCount, "oapi-retry-count", DefaultRetryCount, "Maximum number of tries")
+	fs.IntVar(&o.RetryCount, "oapi-retry-count", DefaultRetryCount, "Maximum number of retries")
 }
 
 func (o *Options) middleware() []middleware.MiddlewareChainOption {
