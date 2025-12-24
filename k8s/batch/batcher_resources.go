@@ -14,30 +14,34 @@ import (
 	osc "github.com/outscale/osc-sdk-go/v3/pkg/osc"
 )
 
+type BatcherByID[R any] = batch.BatcherByID[R]
+
+type BatcherSameQuery[Q, R any] = batch.BatcherSameQuery[Q, R]
+
 func init() {
 	log.Default = k8slog.Logger{}
 }
 
-func NewSnapshotBatcherByID(interval time.Duration, client osc.ClientInterface) *batch.BatcherByID[osc.Snapshot] {
+func NewSnapshotBatcherByID(interval time.Duration, client osc.ClientInterface) *BatcherByID[osc.Snapshot] {
 	return batch.NewSnapshotBatcherByID(interval, client)
 }
 
-func NewSnapshotBatcherSameQuery(interval time.Duration, client osc.ClientInterface) *batch.BatcherSameQuery[osc.ReadSnapshotsRequest, osc.ReadSnapshotsResponse] {
+func NewSnapshotBatcherSameQuery(interval time.Duration, client osc.ClientInterface) *BatcherSameQuery[osc.ReadSnapshotsRequest, osc.ReadSnapshotsResponse] {
 	return batch.NewSnapshotBatcherSameQuery(interval, client)
 }
 
-func NewVolumeBatcherByID(interval time.Duration, client osc.ClientInterface) *batch.BatcherByID[osc.Volume] {
+func NewVolumeBatcherByID(interval time.Duration, client osc.ClientInterface) *BatcherByID[osc.Volume] {
 	return batch.NewVolumeBatcherByID(interval, client)
 }
 
-func NewVolumeBatcherSameQuery(interval time.Duration, client osc.ClientInterface) *batch.BatcherSameQuery[osc.ReadVolumesRequest, osc.ReadVolumesResponse] {
+func NewVolumeBatcherSameQuery(interval time.Duration, client osc.ClientInterface) *BatcherSameQuery[osc.ReadVolumesRequest, osc.ReadVolumesResponse] {
 	return batch.NewVolumeBatcherSameQuery(interval, client)
 }
 
-func NewVmBatcherByID(interval time.Duration, client osc.ClientInterface) *batch.BatcherByID[osc.Vm] {
+func NewVmBatcherByID(interval time.Duration, client osc.ClientInterface) *BatcherByID[osc.Vm] {
 	return batch.NewVmBatcherByID(interval, client)
 }
 
-func NewVmBatcherSameQuery(interval time.Duration, client osc.ClientInterface) *batch.BatcherSameQuery[osc.ReadVmsRequest, osc.ReadVmsResponse] {
+func NewVmBatcherSameQuery(interval time.Duration, client osc.ClientInterface) *BatcherSameQuery[osc.ReadVmsRequest, osc.ReadVmsResponse] {
 	return batch.NewVmBatcherSameQuery(interval, client)
 }
