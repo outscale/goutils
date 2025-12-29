@@ -8,3 +8,11 @@ package ptr
 func To[T any](t T) *T {
 	return &t
 }
+
+func From[T any](t *T) T {
+	if t == nil {
+		var tt T
+		return tt
+	}
+	return *t
+}
