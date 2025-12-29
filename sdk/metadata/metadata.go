@@ -12,7 +12,14 @@ import (
 	"net/http"
 )
 
-const metadataServer = "http://169.254.169.254/latest/meta-data/"
+var DefaultService = NewService(http.DefaultClient)
+
+const (
+	MetadataServer = "http://169.254.169.254/latest/meta-data/"
+
+	SubRegion  = "placement/availability-zone"
+	InstanceID = "instance-id"
+)
 
 // Metadata is the metadata returned by the metadata server.
 type Metadata struct {
@@ -34,7 +41,7 @@ func NewService(client *http.Client) *Service {
 }
 
 func (s *Service) fetch(ctx context.Context, path string) (res string, err error) {
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, metadataServer+path, nil)
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, MetadataServer+path, nil)
 	if err != nil {
 		return "", fmt.Errorf("get metadata: %w", err)
 	}
@@ -59,11 +66,11 @@ func (s *Service) fetch(ctx context.Context, path string) (res string, err error
 }
 
 func (s *Service) fetchSubRegion(ctx context.Context) (string, error) {
-	return s.fetch(ctx, "placement/availability-zone")
+	return s.fetch(ctx, SubRegion)
 }
 
 func (s *Service) fetchInstanceID(ctx context.Context) (string, error) {
-	return s.fetch(ctx, "instance-id")
+	return s.fetch(ctx, InstanceID)
 }
 
 // Fetch fetches metadata from the metadata server.
@@ -86,14 +93,17 @@ func (s *Service) Fetch(ctx context.Context) (Metadata, error) {
 
 // Fetch fetches metadata from the metadata server.
 func Fetch(ctx context.Context) (Metadata, error) {
-	svc := NewService(http.DefaultClient)
-	return svc.Fetch(ctx)
+	return DefaultService.Fetch(ctx)
+}
+
+// GetSubRegion fetches the sub region from the metadata server.
+func GetSubRegion(ctx context.Context) (string, error) {
+	return DefaultService.fetchSubRegion(ctx)
 }
 
 // GetRegion fetches the region from the metadata server.
 func GetRegion(ctx context.Context) (string, error) {
-	svc := NewService(http.DefaultClient)
-	subregion, err := svc.fetchSubRegion(ctx)
+	subregion, err := DefaultService.fetchSubRegion(ctx)
 	if err != nil {
 		return "", err
 	}
@@ -102,10 +112,5 @@ func GetRegion(ctx context.Context) (string, error) {
 
 // GetInstanceID fetches the instance ID from the metadata server.
 func GetInstanceID(ctx context.Context) (string, error) {
-	svc := NewService(http.DefaultClient)
-	instanceID, err := svc.fetchInstanceID(ctx)
-	if err != nil {
-		return "", err
-	}
-	return instanceID, nil
+	return DefaultService.fetchInstanceID(ctx)
 }
