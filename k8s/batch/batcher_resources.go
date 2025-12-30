@@ -14,6 +14,8 @@ import (
 	osc "github.com/outscale/osc-sdk-go/v3/pkg/osc"
 )
 
+var ErrNotFound = batch.ErrNotFound
+
 type BatcherByID[R any] = batch.BatcherByID[R]
 
 type BatcherSameQuery[Q, R any] = batch.BatcherSameQuery[Q, R]
