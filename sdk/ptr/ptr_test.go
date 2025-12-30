@@ -30,3 +30,17 @@ func TestFrom(t *testing.T) {
 		assert.Equal(t, foo{a: 1}, ptr.From(ptr.To(foo{a: 1})))
 	})
 }
+
+func TestEqual(t *testing.T) {
+	t.Run("nil, nil returns true", func(t *testing.T) {
+		assert.True(t, ptr.Equal[int](nil, nil))
+	})
+	t.Run("nil, not nil and not nil, nil returns false", func(t *testing.T) {
+		assert.False(t, ptr.Equal[int](nil, ptr.To(1)))
+		assert.False(t, ptr.Equal[int](ptr.To(1), nil))
+	})
+	t.Run("&a, &b return *a == *b", func(t *testing.T) {
+		assert.False(t, ptr.Equal[int](ptr.To(1), ptr.To(2)))
+		assert.True(t, ptr.Equal[int](ptr.To(1), ptr.To(1)))
+	})
+}
