@@ -26,6 +26,8 @@ github.com/oapi-codegen/runtime v1.1.2 h1:P2+CubHq8fO4Q6fV1tqDBZHCwpVpvPg7oKiYzQ
 github.com/oapi-codegen/runtime v1.1.2/go.mod h1:SK9X900oXmPWilYR5/WKPzt3Kqxn/uS/+lbpREv+eCg=
 github.com/outscale/goutils/sdk v0.0.0-20251222160211-a8f7310d90d4 h1:Gbis7GE0pS61ZZmanvNIfH9641A4424GKIS7mrHlnTw=
 github.com/outscale/goutils/sdk v0.0.0-20251222160211-a8f7310d90d4/go.mod h1:3eWsIE3vHag/vlFaADdpTpVheTAnZovQRPyBvjNhJhU=
+github.com/outscale/goutils/sdk v0.0.0-20251230125904-cf90f7c6a4a4 h1:2J1nJf4GsFvFgTRbAylcWkhuaj4QiRsllDb3gWvVNbY=
+github.com/outscale/goutils/sdk v0.0.0-20251230125904-cf90f7c6a4a4/go.mod h1:9VnX1O5YD3mNppwkt/vk8jim36bCHQHR8tAtucAnZjw=
 github.com/outscale/osc-sdk-go/v3 v3.0.0-beta.2 h1:3UauJs026vpjnFXKQvn1uVrUIstF9GL8E7XDTgA+Sn0=
 github.com/outscale/osc-sdk-go/v3 v3.0.0-beta.2/go.mod h1:+UWiUEbhmj8HUyhoGjmve0WKDezaEirKskWoYk5euTc=
 github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 h1:Jamvg5psRIccs7FGNTlIRMkT8wgtp5eCXdBlqhYGL6U=
