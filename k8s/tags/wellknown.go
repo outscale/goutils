@@ -21,6 +21,8 @@ const (
 
 	// ServiceName is the tag key storing the service name.
 	ServiceName = "OscK8sService"
+	// ServiceID is the tag key storing the service id.
+	ServiceID = "OscK8sServiceID"
 
 	// VmNodeName stores the node name.
 	VmNodeName = "OscK8sNodeName"
