@@ -32,8 +32,8 @@ github.com/maxatome/go-testdeep v1.14.0 h1:rRlLv1+kI8eOI3OaBXZwb3O7xY3exRzdW5QyX
 github.com/maxatome/go-testdeep v1.14.0/go.mod h1:lPZc/HAcJMP92l7yI6TRz1aZN5URwUBUAfUNvrclaNM=
 github.com/oapi-codegen/runtime v1.1.2 h1:P2+CubHq8fO4Q6fV1tqDBZHCwpVpvPg7oKiYzQgXIyI=
 github.com/oapi-codegen/runtime v1.1.2/go.mod h1:SK9X900oXmPWilYR5/WKPzt3Kqxn/uS/+lbpREv+eCg=
-github.com/outscale/osc-sdk-go/v3 v3.0.0-beta.2 h1:3UauJs026vpjnFXKQvn1uVrUIstF9GL8E7XDTgA+Sn0=
-github.com/outscale/osc-sdk-go/v3 v3.0.0-beta.2/go.mod h1:+UWiUEbhmj8HUyhoGjmve0WKDezaEirKskWoYk5euTc=
+github.com/outscale/osc-sdk-go/v3 v3.0.0-beta.2.0.20260113151030-095a94dae195 h1:D8Ub0a1WP7RxPT1EDSPqLR7ZDOqtBKmXYd6AXQ0924A=
+github.com/outscale/osc-sdk-go/v3 v3.0.0-beta.2.0.20260113151030-095a94dae195/go.mod h1:+UWiUEbhmj8HUyhoGjmve0WKDezaEirKskWoYk5euTc=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 h1:Jamvg5psRIccs7FGNTlIRMkT8wgtp5eCXdBlqhYGL6U=
 github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
