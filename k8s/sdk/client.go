@@ -22,18 +22,12 @@ import (
 // NewSDKClient builds a new SDK client, querying the metadata server is OSC_REGION is not set,
 // configuring backoff & ratelimiter based on opts, and checking credentials.
 func NewSDKClient(ctx context.Context, ua string, opts ...Options) (*profile.Profile, osc.ClientInterface, error) {
-	prof, err := profile.NewProfileFromStandardConfiguration("", "")
+	prof, err := profile.New(metadata.SetProfileDefaults(ctx))
 	if err != nil {
 		return nil, nil, fmt.Errorf("load config: %w", err)
 	}
 	if prof.AccessKey == "" || prof.SecretKey == "" {
 		return nil, nil, errors.New("OSC_ACCESS_KEY/OSC_SECRET_KEY are required")
-	}
-	if prof.Region == "" {
-		prof.Region, err = metadata.GetRegion(ctx)
-		if err != nil {
-			return nil, nil, fmt.Errorf("unable to fetch metadata: %w", err)
-		}
 	}
 	lg := log.OAPILogger{}
 	copts := []middleware.MiddlewareChainOption{options.WithUseragent(ua), options.WithLogging(lg)}

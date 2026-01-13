@@ -35,7 +35,7 @@ func truncatedBody(body string) string {
 type OAPILogger struct{}
 
 func callName(r *http.Request) string {
-	return path.Base(r.URL.RawPath)
+	return path.Base(r.URL.Path)
 }
 
 func requestBody(req *http.Request) ([]byte, error) {
