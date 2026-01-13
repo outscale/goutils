@@ -4,7 +4,7 @@ go 1.25.3
 
 require (
 	github.com/jarcoal/httpmock v1.4.1
-	github.com/outscale/osc-sdk-go/v3 v3.0.0-beta.2.0.20260113151030-095a94dae195
+	github.com/outscale/osc-sdk-go/v3 v3.0.0-beta.3
 	github.com/stretchr/testify v1.11.1
 	go.uber.org/mock v0.6.0
 )
