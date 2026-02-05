@@ -2,6 +2,8 @@ dario.cat/mergo v1.0.2 h1:85+piFYR1tMbRrLcDwR18y4UKJ3aH1Tbzi24VRW1TK8=
 dario.cat/mergo v1.0.2/go.mod h1:E/hbnu0NxMFBjpMIE34DRGLWqDy0g5FuKDhCb31ngxA=
 github.com/aws/smithy-go/aws-http-auth v1.0.0 h1:xbNL/wG6i2dyIAEkPk1wh54oU20ECBFDoL6DbZ/QCTU=
 github.com/aws/smithy-go/aws-http-auth v1.0.0/go.mod h1:DzLPJwVyEMYYoczyVkFTH0O/ZDOGQeD0KL09Dc/5jGc=
+github.com/aws/smithy-go/aws-http-auth v1.1.1 h1:xQ7oOn+T0+5Pnsqhb9t7YA2JZDevKZKWuz10yFrFj2w=
+github.com/aws/smithy-go/aws-http-auth v1.1.1/go.mod h1:VuNQchCzFzzAchHl9tgHtgwNK1N2MJC8To7YOPt02Zw=
 github.com/benbjohnson/clock v1.3.0 h1:ip6w0uFQkncKQ979AypyG0ER7mqUSBdKLOgAle/AT8A=
 github.com/benbjohnson/clock v1.3.0/go.mod h1:J11/hYXuz8f4ySSvYwY0FKfm+ezbsZBKZxNJlLklBHA=
 github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc h1:U9qPSI2PIWSS1VwoXQT9A3Wy9MM3WgvqSxFWenqJduM=
@@ -28,6 +30,8 @@ github.com/outscale/goutils/sdk v0.0.0-20260113165558-ff2de7ab6a67 h1:bpkVNbhCWA
 github.com/outscale/goutils/sdk v0.0.0-20260113165558-ff2de7ab6a67/go.mod h1:dVTeuVYvXjyRSKJk0AtY8flbPpEVeR3WMFU1x3VwrCk=
 github.com/outscale/osc-sdk-go/v3 v3.0.0-beta.3 h1:Pvt/buq59di5j6acnUAFWBG0LUFa6kBn6GYrx9bt+0Y=
 github.com/outscale/osc-sdk-go/v3 v3.0.0-beta.3/go.mod h1:+UWiUEbhmj8HUyhoGjmve0WKDezaEirKskWoYk5euTc=
+github.com/outscale/osc-sdk-go/v3 v3.0.0-beta.4 h1:dU4wMtDGNw4sJnEMJuAG2eLz7jRQwVlExo/QOcxxjJc=
+github.com/outscale/osc-sdk-go/v3 v3.0.0-beta.4/go.mod h1:VvDgeJ0jmQ88FPWiEcmA5V3FkQ3WyQnoO0kwrXVAgBA=
 github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 h1:Jamvg5psRIccs7FGNTlIRMkT8wgtp5eCXdBlqhYGL6U=
 github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/spf13/pflag v1.0.10 h1:4EBh2KAYBwaONj6b2Ye1GiHfwjqyROoF4RwYO+vPwFk=
