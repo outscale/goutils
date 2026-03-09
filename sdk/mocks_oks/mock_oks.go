@@ -183,6 +183,26 @@ func (mr *MockClientMockRecorder) GetCPSubregions(ctx any, reqEditors ...any) *g
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCPSubregions", reflect.TypeOf((*MockClient)(nil).GetCPSubregions), varargs...)
 }
 
+// GetClientIP mocks base method.
+func (m *MockClient) GetClientIP(ctx context.Context, params *oks.GetClientIPParams, reqEditors ...middleware.MiddlewareChainOption) (*oks.IPResponse, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, params}
+	for _, a := range reqEditors {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetClientIP", varargs...)
+	ret0, _ := ret[0].(*oks.IPResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetClientIP indicates an expected call of GetClientIP.
+func (mr *MockClientMockRecorder) GetClientIP(ctx, params any, reqEditors ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, params}, reqEditors...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetClientIP", reflect.TypeOf((*MockClient)(nil).GetClientIP), varargs...)
+}
+
 // GetCluster mocks base method.
 func (m *MockClient) GetCluster(ctx context.Context, clusterId string, reqEditors ...middleware.MiddlewareChainOption) (*oks.ClusterResponse, error) {
 	m.ctrl.T.Helper()
@@ -303,6 +323,46 @@ func (mr *MockClientMockRecorder) GetKubernetesVersions(ctx any, reqEditors ...a
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetKubernetesVersions", reflect.TypeOf((*MockClient)(nil).GetKubernetesVersions), varargs...)
 }
 
+// GetNetPeeringAcceptanceTemplate mocks base method.
+func (m *MockClient) GetNetPeeringAcceptanceTemplate(ctx context.Context, reqEditors ...middleware.MiddlewareChainOption) (*oks.TemplateResponseNetPeeringAcceptance, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx}
+	for _, a := range reqEditors {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetNetPeeringAcceptanceTemplate", varargs...)
+	ret0, _ := ret[0].(*oks.TemplateResponseNetPeeringAcceptance)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetNetPeeringAcceptanceTemplate indicates an expected call of GetNetPeeringAcceptanceTemplate.
+func (mr *MockClientMockRecorder) GetNetPeeringAcceptanceTemplate(ctx any, reqEditors ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx}, reqEditors...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetNetPeeringAcceptanceTemplate", reflect.TypeOf((*MockClient)(nil).GetNetPeeringAcceptanceTemplate), varargs...)
+}
+
+// GetNetPeeringRequestTemplate mocks base method.
+func (m *MockClient) GetNetPeeringRequestTemplate(ctx context.Context, reqEditors ...middleware.MiddlewareChainOption) (*oks.TemplateResponseNetPeeringRequest, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx}
+	for _, a := range reqEditors {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetNetPeeringRequestTemplate", varargs...)
+	ret0, _ := ret[0].(*oks.TemplateResponseNetPeeringRequest)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetNetPeeringRequestTemplate indicates an expected call of GetNetPeeringRequestTemplate.
+func (mr *MockClientMockRecorder) GetNetPeeringRequestTemplate(ctx any, reqEditors ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx}, reqEditors...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetNetPeeringRequestTemplate", reflect.TypeOf((*MockClient)(nil).GetNetPeeringRequestTemplate), varargs...)
+}
+
 // GetNodepoolTemplate mocks base method.
 func (m *MockClient) GetNodepoolTemplate(ctx context.Context, reqEditors ...middleware.MiddlewareChainOption) (*oks.TemplateResponseNodepool, error) {
 	m.ctrl.T.Helper()
@@ -341,6 +401,26 @@ func (mr *MockClientMockRecorder) GetProject(ctx, projectId any, reqEditors ...a
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]any{ctx, projectId}, reqEditors...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetProject", reflect.TypeOf((*MockClient)(nil).GetProject), varargs...)
+}
+
+// GetProjectNets mocks base method.
+func (m *MockClient) GetProjectNets(ctx context.Context, projectId string, reqEditors ...middleware.MiddlewareChainOption) (*oks.NetsResponse, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, projectId}
+	for _, a := range reqEditors {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetProjectNets", varargs...)
+	ret0, _ := ret[0].(*oks.NetsResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetProjectNets indicates an expected call of GetProjectNets.
+func (mr *MockClientMockRecorder) GetProjectNets(ctx, projectId any, reqEditors ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, projectId}, reqEditors...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetProjectNets", reflect.TypeOf((*MockClient)(nil).GetProjectNets), varargs...)
 }
 
 // GetProjectPublicIps mocks base method.
