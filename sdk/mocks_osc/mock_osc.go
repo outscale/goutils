@@ -4883,6 +4883,46 @@ func (mr *MockClientMockRecorder) ReadApiLogsWithBody(ctx, contentType, body any
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReadApiLogsWithBody", reflect.TypeOf((*MockClient)(nil).ReadApiLogsWithBody), varargs...)
 }
 
+// ReadCO2EmissionAccount mocks base method.
+func (m *MockClient) ReadCO2EmissionAccount(ctx context.Context, body osc.ReadCO2EmissionAccountJSONRequestBody, reqEditors ...middleware.MiddlewareChainOption) (*osc.ReadCO2EmissionAccountResponse, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, body}
+	for _, a := range reqEditors {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ReadCO2EmissionAccount", varargs...)
+	ret0, _ := ret[0].(*osc.ReadCO2EmissionAccountResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ReadCO2EmissionAccount indicates an expected call of ReadCO2EmissionAccount.
+func (mr *MockClientMockRecorder) ReadCO2EmissionAccount(ctx, body any, reqEditors ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, body}, reqEditors...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReadCO2EmissionAccount", reflect.TypeOf((*MockClient)(nil).ReadCO2EmissionAccount), varargs...)
+}
+
+// ReadCO2EmissionAccountWithBody mocks base method.
+func (m *MockClient) ReadCO2EmissionAccountWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...middleware.MiddlewareChainOption) (*osc.ReadCO2EmissionAccountResponse, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, contentType, body}
+	for _, a := range reqEditors {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ReadCO2EmissionAccountWithBody", varargs...)
+	ret0, _ := ret[0].(*osc.ReadCO2EmissionAccountResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ReadCO2EmissionAccountWithBody indicates an expected call of ReadCO2EmissionAccountWithBody.
+func (mr *MockClientMockRecorder) ReadCO2EmissionAccountWithBody(ctx, contentType, body any, reqEditors ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, contentType, body}, reqEditors...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReadCO2EmissionAccountWithBody", reflect.TypeOf((*MockClient)(nil).ReadCO2EmissionAccountWithBody), varargs...)
+}
+
 // ReadCas mocks base method.
 func (m *MockClient) ReadCas(ctx context.Context, body osc.ReadCasJSONRequestBody, reqEditors ...middleware.MiddlewareChainOption) (*osc.ReadCasResponse, error) {
 	m.ctrl.T.Helper()
@@ -7401,6 +7441,46 @@ func (mr *MockClientMockRecorder) ReadVmsWithBody(ctx, contentType, body any, re
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]any{ctx, contentType, body}, reqEditors...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReadVmsWithBody", reflect.TypeOf((*MockClient)(nil).ReadVmsWithBody), varargs...)
+}
+
+// ReadVolumeUpdateTasks mocks base method.
+func (m *MockClient) ReadVolumeUpdateTasks(ctx context.Context, body osc.ReadVolumeUpdateTasksJSONRequestBody, reqEditors ...middleware.MiddlewareChainOption) (*osc.ReadVolumeUpdateTasksResponse, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, body}
+	for _, a := range reqEditors {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ReadVolumeUpdateTasks", varargs...)
+	ret0, _ := ret[0].(*osc.ReadVolumeUpdateTasksResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ReadVolumeUpdateTasks indicates an expected call of ReadVolumeUpdateTasks.
+func (mr *MockClientMockRecorder) ReadVolumeUpdateTasks(ctx, body any, reqEditors ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, body}, reqEditors...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReadVolumeUpdateTasks", reflect.TypeOf((*MockClient)(nil).ReadVolumeUpdateTasks), varargs...)
+}
+
+// ReadVolumeUpdateTasksWithBody mocks base method.
+func (m *MockClient) ReadVolumeUpdateTasksWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...middleware.MiddlewareChainOption) (*osc.ReadVolumeUpdateTasksResponse, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, contentType, body}
+	for _, a := range reqEditors {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ReadVolumeUpdateTasksWithBody", varargs...)
+	ret0, _ := ret[0].(*osc.ReadVolumeUpdateTasksResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ReadVolumeUpdateTasksWithBody indicates an expected call of ReadVolumeUpdateTasksWithBody.
+func (mr *MockClientMockRecorder) ReadVolumeUpdateTasksWithBody(ctx, contentType, body any, reqEditors ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, contentType, body}, reqEditors...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReadVolumeUpdateTasksWithBody", reflect.TypeOf((*MockClient)(nil).ReadVolumeUpdateTasksWithBody), varargs...)
 }
 
 // ReadVolumes mocks base method.
