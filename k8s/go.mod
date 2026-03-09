@@ -5,7 +5,7 @@ go 1.25.3
 require (
 	dario.cat/mergo v1.0.2
 	github.com/outscale/goutils/sdk v0.0.0-20260113165558-ff2de7ab6a67
-	github.com/outscale/osc-sdk-go/v3 v3.0.0-beta.3
+	github.com/outscale/osc-sdk-go/v3 v3.0.0-beta.4
 	github.com/spf13/pflag v1.0.10
 	github.com/stretchr/testify v1.11.1
 	go.uber.org/mock v0.6.0
@@ -15,7 +15,7 @@ require (
 // replace github.com/outscale/goutils/sdk => ../sdk
 
 require (
-	github.com/aws/smithy-go/aws-http-auth v1.0.0 // indirect
+	github.com/aws/smithy-go/aws-http-auth v1.1.1 // indirect
 	github.com/benbjohnson/clock v1.3.0 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/go-logr/logr v1.4.1 // indirect
