@@ -332,3 +332,313 @@ func TestBatcherSameQuery_Vms(t *testing.T) {
 		wg.Wait()
 	})
 }
+
+func TestBatcherById_SGs(t *testing.T) {
+	t.Run("When concurrent calls are made, the right name is returned to the right Security Group", func(t *testing.T) {
+		mockCtrl := gomock.NewController(t)
+		mockSDK := mocks_osc.NewMockClient(mockCtrl)
+		mockSDK.EXPECT().ReadSecurityGroups(gomock.Any(), gomock.Cond(func(req osc.ReadSecurityGroupsRequest) bool {
+			return len(*req.Filters.SecurityGroupIds) == 4
+		})).Return(&osc.ReadSecurityGroupsResponse{SecurityGroups: &[]osc.SecurityGroup{
+			{SecurityGroupId: "id-one", SecurityGroupName: "one"},
+			{SecurityGroupId: "id-two", SecurityGroupName: "two"},
+			{SecurityGroupId: "id-three", SecurityGroupName: "three"},
+			{SecurityGroupId: "id-four", SecurityGroupName: "four"},
+		}}, nil).MinTimes(1)
+
+		rw := batch.NewSecurityGroupBatcherByID(time.Second, mockSDK)
+		ctx, cancel := context.WithTimeout(context.Background(), 99*time.Second)
+		defer cancel()
+		go rw.Run(ctx)
+
+		wg := sync.WaitGroup{}
+		for range 2 {
+			for _, name := range []string{"one", "two", "three", "four"} {
+				wg.Go(func() {
+					time.Sleep(time.Duration(rand.IntN(100)) * time.Millisecond)
+					v, err := rw.WaitUntil(ctx, "id-"+string(name), func(v *osc.SecurityGroup) (bool, error) {
+						if v.SecurityGroupName != name {
+							return false, errors.New("invalid name")
+						}
+						return true, nil
+					})
+					require.NoError(t, err)
+					assert.Equal(t, "id-"+string(name), v.SecurityGroupId)
+					assert.Equal(t, name, v.SecurityGroupName)
+				})
+			}
+		}
+		wg.Wait()
+	})
+	t.Run("ErrNotFound is returned if a Security Group does not exist anymore", func(t *testing.T) {
+		mockCtrl := gomock.NewController(t)
+		mockSDK := mocks_osc.NewMockClient(mockCtrl)
+		mockSDK.EXPECT().ReadSecurityGroups(gomock.Any(), gomock.Any()).Return(&osc.ReadSecurityGroupsResponse{SecurityGroups: &[]osc.SecurityGroup{}}, nil).MinTimes(1)
+
+		rw := batch.NewSecurityGroupBatcherByID(time.Second, mockSDK)
+		ctx, cancel := context.WithTimeout(context.Background(), 99*time.Second)
+		defer cancel()
+		go rw.Run(ctx)
+
+		wg := sync.WaitGroup{}
+		wg.Go(func() {
+			_, err := rw.Read(ctx, "id-foo")
+			require.ErrorIs(t, err, batch.ErrNotFound)
+		})
+		wg.Wait()
+	})
+	t.Run("Errors are returned", func(t *testing.T) {
+		mockCtrl := gomock.NewController(t)
+		mockSDK := mocks_osc.NewMockClient(mockCtrl)
+		mockSDK.EXPECT().ReadSecurityGroups(gomock.Any(), gomock.Any()).Return(&osc.ReadSecurityGroupsResponse{SecurityGroups: &[]osc.SecurityGroup{
+			{SecurityGroupId: "id-error"},
+		}}, nil).MinTimes(1)
+
+		rw := batch.NewSecurityGroupBatcherByID(time.Second, mockSDK)
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
+		go rw.Run(ctx)
+
+		_, err := rw.WaitUntil(ctx, "id-error", func(v *osc.SecurityGroup) (bool, error) {
+			return false, errors.New("error")
+		})
+		require.Error(t, err)
+	})
+}
+
+func TestBatcherSameQuery_SGs(t *testing.T) {
+	t.Run("When concurrent calls are made, a single query is made", func(t *testing.T) {
+		req := osc.ReadSecurityGroupsRequest{Filters: &osc.FiltersSecurityGroup{
+			Descriptions: &[]string{"one", "two"},
+		}}
+		res := &[]osc.SecurityGroup{
+			{SecurityGroupId: "id-foo", Description: "one"},
+			{SecurityGroupId: "id-bar", Description: "two"},
+			{SecurityGroupId: "id-baz", Description: "two"},
+		}
+		mockCtrl := gomock.NewController(t)
+		mockSDK := mocks_osc.NewMockClient(mockCtrl)
+		mockSDK.EXPECT().ReadSecurityGroups(gomock.Any(), gomock.Eq(req)).Return(&osc.ReadSecurityGroupsResponse{SecurityGroups: res}, nil)
+		rw := batch.NewSecurityGroupBatcherSameQuery(time.Second, mockSDK)
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
+		go rw.Run(ctx)
+
+		wg := sync.WaitGroup{}
+		for range 4 {
+			wg.Go(func() {
+				vs, err := rw.Read(ctx, req)
+				require.NoError(t, err)
+				require.NotNil(t, vs.SecurityGroups)
+				require.Len(t, *vs.SecurityGroups, 3)
+			})
+		}
+		wg.Wait()
+	})
+}
+
+func TestBatcherById_Nets(t *testing.T) {
+	t.Run("When concurrent calls are made, the right status is returned to the right Net", func(t *testing.T) {
+		mockCtrl := gomock.NewController(t)
+		mockSDK := mocks_osc.NewMockClient(mockCtrl)
+		mockSDK.EXPECT().ReadNets(gomock.Any(), gomock.Cond(func(req osc.ReadNetsRequest) bool {
+			return len(*req.Filters.NetIds) == 3
+		})).Return(&osc.ReadNetsResponse{Nets: &[]osc.Net{
+			{NetId: "id-pending", State: osc.NetStatePending},
+			{NetId: "id-available", State: osc.NetStateAvailable},
+			{NetId: "id-deleting", State: osc.NetStateDeleting},
+		}}, nil).MinTimes(1)
+
+		rw := batch.NewNetBatcherByID(time.Second, mockSDK)
+		ctx, cancel := context.WithTimeout(context.Background(), 99*time.Second)
+		defer cancel()
+		go rw.Run(ctx)
+
+		wg := sync.WaitGroup{}
+		for range 2 {
+			for _, state := range []osc.NetState{osc.NetStatePending, osc.NetStateAvailable, osc.NetStateDeleting} {
+				wg.Go(func() {
+					time.Sleep(time.Duration(rand.IntN(100)) * time.Millisecond)
+					n, err := rw.WaitUntil(ctx, "id-"+string(state), func(v *osc.Net) (bool, error) {
+						if v.State != state {
+							return false, errors.New("invalid state")
+						}
+						return true, nil
+					})
+					require.NoError(t, err)
+					assert.Equal(t, "id-"+string(state), n.NetId)
+					assert.Equal(t, state, n.State)
+				})
+			}
+		}
+		wg.Wait()
+	})
+	t.Run("ErrNotFound is returned if a Net does not exist anymore", func(t *testing.T) {
+		mockCtrl := gomock.NewController(t)
+		mockSDK := mocks_osc.NewMockClient(mockCtrl)
+		mockSDK.EXPECT().ReadNets(gomock.Any(), gomock.Any()).Return(&osc.ReadNetsResponse{Nets: &[]osc.Net{}}, nil).MinTimes(1)
+
+		rw := batch.NewNetBatcherByID(time.Second, mockSDK)
+		ctx, cancel := context.WithTimeout(context.Background(), 99*time.Second)
+		defer cancel()
+		go rw.Run(ctx)
+
+		wg := sync.WaitGroup{}
+		wg.Go(func() {
+			_, err := rw.Read(ctx, "id-foo")
+			require.ErrorIs(t, err, batch.ErrNotFound)
+		})
+		wg.Wait()
+	})
+	t.Run("Errors are returned", func(t *testing.T) {
+		mockCtrl := gomock.NewController(t)
+		mockSDK := mocks_osc.NewMockClient(mockCtrl)
+		mockSDK.EXPECT().ReadNets(gomock.Any(), gomock.Any()).Return(&osc.ReadNetsResponse{Nets: &[]osc.Net{
+			{NetId: "id-error"},
+		}}, nil).MinTimes(1)
+
+		rw := batch.NewNetBatcherByID(time.Second, mockSDK)
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
+		go rw.Run(ctx)
+
+		_, err := rw.WaitUntil(ctx, "id-error", func(v *osc.Net) (bool, error) {
+			return false, errors.New("error")
+		})
+		require.Error(t, err)
+	})
+}
+
+func TestBatcherSameQuery_Nets(t *testing.T) {
+	t.Run("When concurrent calls are made, a single query is made", func(t *testing.T) {
+		req := osc.ReadNetsRequest{Filters: &osc.FiltersNet{
+			States: &[]osc.NetState{osc.NetStatePending, osc.NetStateAvailable},
+		}}
+		res := &[]osc.Net{
+			{NetId: "id-foo", State: osc.NetStatePending},
+			{NetId: "id-bar", State: osc.NetStateAvailable},
+			{NetId: "id-baz", State: osc.NetStateAvailable},
+		}
+		mockCtrl := gomock.NewController(t)
+		mockSDK := mocks_osc.NewMockClient(mockCtrl)
+		mockSDK.EXPECT().ReadNets(gomock.Any(), gomock.Eq(req)).Return(&osc.ReadNetsResponse{Nets: res}, nil)
+		rw := batch.NewNetBatcherSameQuery(time.Second, mockSDK)
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
+		go rw.Run(ctx)
+
+		wg := sync.WaitGroup{}
+		for range 4 {
+			wg.Go(func() {
+				vs, err := rw.Read(ctx, req)
+				require.NoError(t, err)
+				require.NotNil(t, vs.Nets)
+				require.Len(t, *vs.Nets, 3)
+			})
+		}
+		wg.Wait()
+	})
+}
+
+func TestBatcherById_Subnets(t *testing.T) {
+	t.Run("When concurrent calls are made, the right status is returned to the right Subnet", func(t *testing.T) {
+		mockCtrl := gomock.NewController(t)
+		mockSDK := mocks_osc.NewMockClient(mockCtrl)
+		mockSDK.EXPECT().ReadSubnets(gomock.Any(), gomock.Cond(func(req osc.ReadSubnetsRequest) bool {
+			return len(*req.Filters.SubnetIds) == 3
+		})).Return(&osc.ReadSubnetsResponse{Subnets: &[]osc.Subnet{
+			{SubnetId: "id-pending", State: osc.SubnetStatePending},
+			{SubnetId: "id-available", State: osc.SubnetStateAvailable},
+			{SubnetId: "id-deleted", State: osc.SubnetStateDeleted},
+		}}, nil).MinTimes(1)
+
+		rw := batch.NewSubnetBatcherByID(time.Second, mockSDK)
+		ctx, cancel := context.WithTimeout(context.Background(), 99*time.Second)
+		defer cancel()
+		go rw.Run(ctx)
+
+		wg := sync.WaitGroup{}
+		for range 2 {
+			for _, state := range []osc.SubnetState{osc.SubnetStatePending, osc.SubnetStateAvailable, osc.SubnetStateDeleted} {
+				wg.Go(func() {
+					time.Sleep(time.Duration(rand.IntN(100)) * time.Millisecond)
+					s, err := rw.WaitUntil(ctx, "id-"+string(state), func(v *osc.Subnet) (bool, error) {
+						if v.State != state {
+							return false, errors.New("invalid state")
+						}
+						return true, nil
+					})
+					require.NoError(t, err)
+					assert.Equal(t, "id-"+string(state), s.SubnetId)
+					assert.Equal(t, state, s.State)
+				})
+			}
+		}
+		wg.Wait()
+	})
+	t.Run("ErrNotFound is returned if a Subnet does not exist anymore", func(t *testing.T) {
+		mockCtrl := gomock.NewController(t)
+		mockSDK := mocks_osc.NewMockClient(mockCtrl)
+		mockSDK.EXPECT().ReadSubnets(gomock.Any(), gomock.Any()).Return(&osc.ReadSubnetsResponse{Subnets: &[]osc.Subnet{}}, nil).MinTimes(1)
+
+		rw := batch.NewSubnetBatcherByID(time.Second, mockSDK)
+		ctx, cancel := context.WithTimeout(context.Background(), 99*time.Second)
+		defer cancel()
+		go rw.Run(ctx)
+
+		wg := sync.WaitGroup{}
+		wg.Go(func() {
+			_, err := rw.Read(ctx, "id-foo")
+			require.ErrorIs(t, err, batch.ErrNotFound)
+		})
+		wg.Wait()
+	})
+	t.Run("Errors are returned", func(t *testing.T) {
+		mockCtrl := gomock.NewController(t)
+		mockSDK := mocks_osc.NewMockClient(mockCtrl)
+		mockSDK.EXPECT().ReadSubnets(gomock.Any(), gomock.Any()).Return(&osc.ReadSubnetsResponse{Subnets: &[]osc.Subnet{
+			{SubnetId: "id-error"},
+		}}, nil).MinTimes(1)
+
+		rw := batch.NewSubnetBatcherByID(time.Second, mockSDK)
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
+		go rw.Run(ctx)
+
+		_, err := rw.WaitUntil(ctx, "id-error", func(v *osc.Subnet) (bool, error) {
+			return false, errors.New("error")
+		})
+		require.Error(t, err)
+	})
+}
+
+func TestBatcherSameQuery_Subnets(t *testing.T) {
+	t.Run("When concurrent calls are made, a single query is made", func(t *testing.T) {
+		req := osc.ReadSubnetsRequest{Filters: &osc.FiltersSubnet{
+			States: &[]osc.SubnetState{osc.SubnetStatePending, osc.SubnetStateAvailable},
+		}}
+		res := &[]osc.Subnet{
+			{SubnetId: "id-foo", State: osc.SubnetStatePending},
+			{SubnetId: "id-bar", State: osc.SubnetStateAvailable},
+			{SubnetId: "id-baz", State: osc.SubnetStateAvailable},
+		}
+		mockCtrl := gomock.NewController(t)
+		mockSDK := mocks_osc.NewMockClient(mockCtrl)
+		mockSDK.EXPECT().ReadSubnets(gomock.Any(), gomock.Eq(req)).Return(&osc.ReadSubnetsResponse{Subnets: res}, nil)
+		rw := batch.NewSubnetBatcherSameQuery(time.Second, mockSDK)
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
+		go rw.Run(ctx)
+
+		wg := sync.WaitGroup{}
+		for range 4 {
+			wg.Go(func() {
+				vs, err := rw.Read(ctx, req)
+				require.NoError(t, err)
+				require.NotNil(t, vs.Subnets)
+				require.Len(t, *vs.Subnets, 3)
+			})
+		}
+		wg.Wait()
+	})
+}
