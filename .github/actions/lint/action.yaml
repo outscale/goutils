@@ -1,0 +1,21 @@
+name: 🔎 golangci-lint
+description: Runs golang-ci-lint
+inputs:
+  working-directory:
+    description: 'working directory'
+
+runs:
+  using: "composite"
+  steps:
+    - name: computing config path
+      shell: bash
+      run: |
+        path=${{ github.action_path }}/.golangci.yaml
+        echo "config=$path" >> $GITHUB_ENV
+    - name: run golangci-lint
+      uses: golangci/golangci-lint-action@1e7e51e771db61008b38414a730f564565cf7c20 # v9
+      with:
+        version: v2.11.3
+        args: --timeout=300s --config=${{ env.config }}
+        only-new-issues: true
+        working-directory: ${{ inputs.working-directory }}
