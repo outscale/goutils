@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/outscale/osc-sdk-go/v3/pkg/middleware"
-	options "github.com/outscale/osc-sdk-go/v3/pkg/utils"
+	"github.com/outscale/osc-sdk-go/v3/pkg/options"
 	"github.com/spf13/pflag"
 )
 

@@ -8,6 +8,14 @@ import (
 )
 
 func TestCheckCredentials(t *testing.T) {
+	t.Run("Empty credentials are rejected with an error", func(t *testing.T) {
+		t.Setenv("OSC_ACCESS_KEY", "")
+		t.Setenv("OSC_SECRET_KEY", "")
+		t.Setenv("OSC_CONFIG_FILE", "nofile")
+		t.Setenv("OSC_REGION", "eu-west-2")
+		_, _, err := sdk.NewSDKClient(t.Context(), "goutils/dev", sdk.Options{})
+		require.Error(t, err)
+	})
 	t.Run("Invalid credentials are rejected with an error", func(t *testing.T) {
 		t.Setenv("OSC_ACCESS_KEY", "foo")
 		t.Setenv("OSC_SECRET_KEY", "bar")

@@ -183,26 +183,6 @@ func (mr *MockClientMockRecorder) GetCPSubregions(ctx any, reqEditors ...any) *g
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCPSubregions", reflect.TypeOf((*MockClient)(nil).GetCPSubregions), varargs...)
 }
 
-// GetClientIP mocks base method.
-func (m *MockClient) GetClientIP(ctx context.Context, params *oks.GetClientIPParams, reqEditors ...middleware.MiddlewareChainOption) (*oks.IPResponse, error) {
-	m.ctrl.T.Helper()
-	varargs := []any{ctx, params}
-	for _, a := range reqEditors {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "GetClientIP", varargs...)
-	ret0, _ := ret[0].(*oks.IPResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetClientIP indicates an expected call of GetClientIP.
-func (mr *MockClientMockRecorder) GetClientIP(ctx, params any, reqEditors ...any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]any{ctx, params}, reqEditors...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetClientIP", reflect.TypeOf((*MockClient)(nil).GetClientIP), varargs...)
-}
-
 // GetCluster mocks base method.
 func (m *MockClient) GetCluster(ctx context.Context, clusterId string, reqEditors ...middleware.MiddlewareChainOption) (*oks.ClusterResponse, error) {
 	m.ctrl.T.Helper()
@@ -224,9 +204,9 @@ func (mr *MockClientMockRecorder) GetCluster(ctx, clusterId any, reqEditors ...a
 }
 
 // GetClusterTemplate mocks base method.
-func (m *MockClient) GetClusterTemplate(ctx context.Context, params *oks.GetClusterTemplateParams, reqEditors ...middleware.MiddlewareChainOption) (*oks.TemplateResponseClusterInputTemplate, error) {
+func (m *MockClient) GetClusterTemplate(ctx context.Context, reqEditors ...middleware.MiddlewareChainOption) (*oks.TemplateResponseClusterInputTemplate, error) {
 	m.ctrl.T.Helper()
-	varargs := []any{ctx, params}
+	varargs := []any{ctx}
 	for _, a := range reqEditors {
 		varargs = append(varargs, a)
 	}
@@ -237,9 +217,9 @@ func (m *MockClient) GetClusterTemplate(ctx context.Context, params *oks.GetClus
 }
 
 // GetClusterTemplate indicates an expected call of GetClusterTemplate.
-func (mr *MockClientMockRecorder) GetClusterTemplate(ctx, params any, reqEditors ...any) *gomock.Call {
+func (mr *MockClientMockRecorder) GetClusterTemplate(ctx any, reqEditors ...any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	varargs := append([]any{ctx, params}, reqEditors...)
+	varargs := append([]any{ctx}, reqEditors...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetClusterTemplate", reflect.TypeOf((*MockClient)(nil).GetClusterTemplate), varargs...)
 }
 
