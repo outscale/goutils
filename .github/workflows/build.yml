@@ -8,7 +8,7 @@ on:
       - "**.go"
       - "*/go.*"
       - ".github/workflows/build.yml"
-    
+
 permissions:
   contents: read
 
@@ -30,15 +30,12 @@ jobs:
       uses: actions/setup-go@4b73464bb391d4059bd26b0524d20df3927bd417 # v6
       with:
         go-version: '1.26'
-    - name: 
+    - name:
       run: echo "replace github.com/outscale/goutils/sdk => ../sdk" >> k8s/go.mod
     - name: 🔎 golangci-lint
-      uses: golangci/golangci-lint-action@1e7e51e771db61008b38414a730f564565cf7c20 # v9
+      uses: ./.github/actions/lint # v9
       with:
-        version: v2.7.1
         working-directory: sdk
-        args: --timeout=300s
-        only-new-issues: true
     - name: 🧪 Unit tests
       run: cd sdk && go test ./...
   k8s:
@@ -51,11 +48,8 @@ jobs:
       with:
         go-version: '1.26'
     - name: 🔎 golangci-lint
-      uses: golangci/golangci-lint-action@1e7e51e771db61008b38414a730f564565cf7c20 # v9
+      uses: ./.github/actions/lint # v9
       with:
-        version: v2.7.1
         working-directory: k8s
-        args: --timeout=300s
-        only-new-issues: true
     - name: 🧪 Unit tests
       run: cd k8s && go test ./...

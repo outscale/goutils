@@ -1,0 +1,66 @@
+version: "2"
+run:
+  timeout: 5m
+
+formatters:
+  enable:
+    - gofumpt
+
+output:
+  sort-order:
+    - file
+    - linter
+    - severity
+
+issues:
+  uniq-by-line: false
+  max-same-issues: 10
+
+linters:
+  default: none
+  enable:
+    - bodyclose
+    - contextcheck
+    - dogsled
+    - errcheck
+    - errname
+    - errorlint
+    - exptostd
+    - ginkgolinter
+    - gocritic
+    - gosec
+    - govet
+    - importas
+    - ineffassign
+      #- lll
+    - loggercheck
+    - misspell
+    - modernize
+    - musttag
+    - nakedret
+    - nilerr
+    - noctx
+    - nolintlint
+    - nosprintfhostport
+    - perfsprint
+    - prealloc
+    # - revive
+    - staticcheck
+    - testifylint
+    - testpackage
+    - thelper
+    - unused
+    - usetesting
+    - whitespace
+  exclusions:
+    rules:
+      - path: _test\.go
+        linters:
+          - dupl
+          - gosec
+          - dogsled
+          - musttag
+          - perfsprint
+  settings:
+    lll:
+      line-length: 160
