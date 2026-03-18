@@ -14,15 +14,15 @@ import (
 	"github.com/outscale/goutils/k8s/log"
 	"github.com/outscale/goutils/sdk/metadata"
 	"github.com/outscale/osc-sdk-go/v3/pkg/middleware"
+	"github.com/outscale/osc-sdk-go/v3/pkg/options"
 	"github.com/outscale/osc-sdk-go/v3/pkg/osc"
 	"github.com/outscale/osc-sdk-go/v3/pkg/profile"
-	options "github.com/outscale/osc-sdk-go/v3/pkg/utils"
 )
 
 // NewSDKClient builds a new SDK client, querying the metadata server is OSC_REGION is not set,
 // configuring backoff & ratelimiter based on opts, and checking credentials.
 func NewSDKClient(ctx context.Context, ua string, opts ...Options) (*profile.Profile, osc.ClientInterface, error) {
-	prof, err := profile.New(metadata.SetProfileDefaults(ctx))
+	prof, err := profile.New(profile.FromEnv(), profile.MergeWith(profile.FromFile("", "")), metadata.SetProfileDefaults(ctx))
 	if err != nil {
 		return nil, nil, fmt.Errorf("load config: %w", err)
 	}
