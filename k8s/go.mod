@@ -4,7 +4,7 @@ go 1.25.3
 
 require (
 	dario.cat/mergo v1.0.2
-	github.com/outscale/goutils/sdk v0.0.1
+	github.com/outscale/goutils/sdk v0.0.2
 	github.com/outscale/osc-sdk-go/v3 v3.0.0-rc.1
 	github.com/spf13/pflag v1.0.10
 	github.com/stretchr/testify v1.11.1
