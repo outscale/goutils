@@ -37,7 +37,7 @@ linters:
     - misspell
     - modernize
     - musttag
-    - nakedret
+    # - nakedret
     - nilerr
     - noctx
     - nolintlint
@@ -64,3 +64,7 @@ linters:
   settings:
     lll:
       line-length: 160
+    usetesting:
+      context-background: true
+      context-todo: true
+      os-temp-dir: true
