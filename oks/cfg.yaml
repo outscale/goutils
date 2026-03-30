@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/oapi-codegen/oapi-codegen/v2.5.0/configuration-schema.json
+package: v1beta2
+output: apis/oks.dev/v1beta2/nodepool.go
+generate:
+  models: true
+output-options:
+  skip-prune: true
+  prefer-skip-optional-pointer-on-container-types: true
+  user-templates:
+    constants.tmpl: templates/constants.tmpl

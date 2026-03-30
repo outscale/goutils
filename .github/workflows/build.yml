@@ -53,3 +53,16 @@ jobs:
         working-directory: k8s
     - name: 🧪 Unit tests
       run: cd k8s && go test ./...
+  oks:
+    runs-on: ubuntu-latest
+    steps:
+    - name: ⬇️ Checkout
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+    - name: ⬇️ Install Go
+      uses: actions/setup-go@4b73464bb391d4059bd26b0524d20df3927bd417 # v6
+      with:
+        go-version: '1.26'
+    - name: 🔎 golangci-lint
+      uses: ./.github/actions/lint # v9
+      with:
+        working-directory: oks
