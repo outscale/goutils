@@ -28,8 +28,8 @@ func Has(tags []osc.ResourceTag, kv ...string) bool {
 // It returns the suffix of the key found and the tag value.
 func HasPrefix(tags []osc.ResourceTag, prefix string) (suffix, value string, found bool) {
 	for _, t := range tags {
-		if strings.HasPrefix(t.Key, prefix) {
-			return strings.TrimPrefix(t.Key, prefix), t.Value, true
+		if after, ok := strings.CutPrefix(t.Key, prefix); ok {
+			return after, t.Value, true
 		}
 	}
 	return "", "", false
