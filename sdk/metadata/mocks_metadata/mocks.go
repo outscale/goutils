@@ -27,7 +27,7 @@ func mock(k, v string) {
 }
 
 func MockSubRegion(az string) {
-	mock(metadata.SubRegion, az)
+	mock(metadata.Subregion, az)
 }
 
 func MockInstanceID(id string) {
