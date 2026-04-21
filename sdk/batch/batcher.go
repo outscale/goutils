@@ -37,14 +37,16 @@ type watcher[Q, R any] struct {
 	resp  chan result[R]
 }
 
-type resultFn[Q, R any] func(query Q) (*R, bool)
-type batcher[Q, R any] struct {
-	interval time.Duration
-	refresh  func(ctx context.Context, queries []Q) (resultFn[Q, R], error)
-	merge    func(query Q, queries []Q) ([]Q, bool)
-	in       chan watcher[Q, R]
-	batches  []batch[Q, R]
-}
+type (
+	resultFn[Q, R any] func(query Q) (*R, bool)
+	batcher[Q, R any]  struct {
+		interval time.Duration
+		refresh  func(ctx context.Context, queries []Q) (resultFn[Q, R], error)
+		merge    func(query Q, queries []Q) ([]Q, bool)
+		in       chan watcher[Q, R]
+		batches  []batch[Q, R]
+	}
+)
 
 type batch[Q, R any] struct {
 	query    []Q
