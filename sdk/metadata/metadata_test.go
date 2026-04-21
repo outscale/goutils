@@ -7,6 +7,7 @@ package metadata_test
 
 import (
 	"net/http"
+	"os"
 	"strings"
 	"testing"
 
@@ -20,18 +21,28 @@ func TestService_Fetch(t *testing.T) {
 
 	meta, err := svc.Fetch(t.Context())
 	require.NoError(t, err)
+	assert.NotEmpty(t, meta.Hostname)
 	assert.NotEmpty(t, meta.InstanceID)
 	assert.True(t, strings.HasPrefix(meta.InstanceID, "i-"))
-	assert.NotEmpty(t, meta.Region)
-	assert.Contains(t, []string{"eu-west-2", "us-east-2"}, meta.Region)
-	assert.NotEmpty(t, meta.SubRegion)
-	assert.Truef(t, strings.HasPrefix(meta.SubRegion, meta.Region), "subregion %q should start with the region", meta.SubRegion)
+	assert.NotEmpty(t, meta.Placement.Subregion)
 	assert.NotEmpty(t, meta.OMIID)
 	assert.Truef(t, strings.HasPrefix(meta.OMIID, "ami-"), "%q should have an ami- prefix", meta.OMIID)
 	assert.NotEmpty(t, meta.InstanceType)
 	assert.Truef(t, strings.HasPrefix(meta.InstanceType, "tinav"), "%q should have an tinav prefix", meta.InstanceType)
-	assert.NotEmpty(t, meta.Cluster)
-	assert.NotEmpty(t, meta.Server)
+	assert.NotEmpty(t, meta.MAC)
+	assert.NotEmpty(t, meta.Placement.Cluster)
+	assert.NotEmpty(t, meta.Placement.Server)
+	assert.NotEmpty(t, meta.DeviceMapping)
+	assert.NotEmpty(t, meta.Tags)
+}
+
+func TestGetHostname(t *testing.T) {
+	host, err := metadata.GetHostname(t.Context())
+	require.NoError(t, err)
+	assert.NotEmpty(t, host)
+	oshost, err := os.Hostname()
+	require.NoError(t, err)
+	assert.True(t, strings.HasPrefix(host, oshost))
 }
 
 func TestGetRegion(t *testing.T) {
@@ -41,8 +52,8 @@ func TestGetRegion(t *testing.T) {
 	assert.Contains(t, []string{"eu-west-2", "us-east-2"}, region)
 }
 
-func TestGetSubRegion(t *testing.T) {
-	sr, err := metadata.GetSubRegion(t.Context())
+func TestGetSubregion(t *testing.T) {
+	sr, err := metadata.GetSubregion(t.Context())
 	require.NoError(t, err)
 	assert.NotEmpty(t, sr)
 	assert.Contains(t, []string{"eu-west-2", "us-east-2"}, sr[:len(sr)-1])
@@ -73,4 +84,11 @@ func TestGetPlacementServer(t *testing.T) {
 	server, err := metadata.GetPlacementServer(t.Context())
 	require.NoError(t, err)
 	assert.NotEmpty(t, server)
+}
+
+func TestGetDeviceMapping(t *testing.T) {
+	mapping, err := metadata.GetDeviceMappings(t.Context())
+	require.NoError(t, err)
+	assert.NotEmpty(t, mapping)
+	assert.NotEmpty(t, mapping["root"])
 }

@@ -9,13 +9,13 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestMockSubRegion(t *testing.T) {
+func TestMockSubregion(t *testing.T) {
 	mocks_metadata.Setup()
 	defer mocks_metadata.Teardown()
 
 	mocks_metadata.MockSubRegion("foo")
 
-	az, err := metadata.GetSubRegion(t.Context())
+	az, err := metadata.GetSubregion(t.Context())
 	require.NoError(t, err)
 	assert.Equal(t, "foo", az)
 }
