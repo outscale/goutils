@@ -30,3 +30,37 @@ func TestMockInstanceID(t *testing.T) {
 	require.NoError(t, err)
 	assert.Equal(t, "foo", az)
 }
+
+func TestMockDeviceMapping(t *testing.T) {
+	{
+		mocks_metadata.Setup()
+		defer mocks_metadata.Teardown()
+
+		mocks_metadata.MockDevideMappings(nil)
+
+		mappings, err := metadata.GetDeviceMappings(t.Context())
+		require.NoError(t, err)
+		assert.Equal(t, map[string]string{
+			"ami":  "/dev/sda1",
+			"root": "/dev/sda1",
+		}, mappings)
+	}
+	{
+		mocks_metadata.Setup()
+		defer mocks_metadata.Teardown()
+
+		mocks_metadata.MockDevideMappings(map[string]string{
+			"ebs0": "/dev/xvda",
+			"ebs1": "/dev/xvdb",
+		})
+
+		mappings, err := metadata.GetDeviceMappings(t.Context())
+		require.NoError(t, err)
+		assert.Equal(t, map[string]string{
+			"ami":  "/dev/sda1",
+			"root": "/dev/sda1",
+			"ebs0": "/dev/xvda",
+			"ebs1": "/dev/xvdb",
+		}, mappings)
+	}
+}

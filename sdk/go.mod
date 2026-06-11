@@ -5,6 +5,7 @@ go 1.25.3
 require (
 	github.com/jarcoal/httpmock v1.4.1
 	github.com/outscale/osc-sdk-go/v3 v3.0.0-rc.2
+	github.com/samber/lo v1.53.0
 	github.com/stretchr/testify v1.11.1
 	go.uber.org/mock v0.6.0
 )
@@ -22,5 +23,6 @@ require (
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	go.uber.org/ratelimit v0.3.1 // indirect
 	golang.org/x/sys v0.35.0 // indirect
+	golang.org/x/text v0.22.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
