@@ -27,7 +27,7 @@ const (
 	InstanceID       = "instance-id"
 	OMIID            = "ami-id"
 	InstanceType     = "instance-type"
-	DeviceMapping    = "block-device-mapping"
+	DeviceMapping    = "block-device-mapping/"
 	MAC              = "mac"
 	Tags             = "tags"
 )

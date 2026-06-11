@@ -91,4 +91,5 @@ func TestGetDeviceMapping(t *testing.T) {
 	require.NoError(t, err)
 	assert.NotEmpty(t, mapping)
 	assert.NotEmpty(t, mapping["root"])
+	assert.NotEmpty(t, mapping["ami"])
 }
