@@ -34,6 +34,8 @@ github.com/oapi-codegen/runtime v1.3.1 h1:RgDY6J4OGQLbRXhG/Xpt3vSVqYpHQS7hN4m85+
 github.com/oapi-codegen/runtime v1.3.1/go.mod h1:kOdeacKy7t40Rclb1je37ZLFboFxh+YLy0zaPCMibPY=
 github.com/outscale/osc-sdk-go/v3 v3.0.0-rc.2 h1:uj8s4jaqqzq2hFqQVAB6PTVwuPm43e5Ti/ZFQqvCAB0=
 github.com/outscale/osc-sdk-go/v3 v3.0.0-rc.2/go.mod h1:Yi0j2XAZ0/8g0ObVFofMSL5+IuNIDp/AiEI6gXc7txc=
+github.com/outscale/osc-sdk-go/v3 v3.0.0-rc.3 h1:dE2Swgp2M3gSdv5Yx28JFHF1LBhGzVOb6NbVjyshFAs=
+github.com/outscale/osc-sdk-go/v3 v3.0.0-rc.3/go.mod h1:Yi0j2XAZ0/8g0ObVFofMSL5+IuNIDp/AiEI6gXc7txc=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 h1:Jamvg5psRIccs7FGNTlIRMkT8wgtp5eCXdBlqhYGL6U=
 github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
