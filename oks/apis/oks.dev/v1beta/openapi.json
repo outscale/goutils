@@ -1,0 +1,334 @@
+{
+    "openapi": "1.0.1",
+    "title": "ippool",
+    "version": "v1beta",
+    "components": {
+        "schemas": {
+            "LastError": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    },
+                    "posted": {
+                        "type": "string"
+                    }
+                },
+                "required": ["message", "posted"]
+            },
+            "IPPoolSpec": {
+                "type": "object",
+                "properties": {
+                    "numAddresses": {
+                        "maximum": 255,
+                        "minimum": 0,
+                        "type": "integer"
+                    },
+                    "persistent": {
+                        "default": false,
+                        "type": "boolean",
+                        "x-go-type-skip-optional-pointer": true
+                    }
+                },
+                "required": ["numAddresses"]
+            },
+            "IPPoolProgress": {
+                "type": "object",
+                "properties": {
+                    "allocatedAddresses": {
+                        "type": "integer"
+                    },
+                    "linkedAddresses": {
+                        "type": "integer"
+                    },
+                    "unlinkedAddresses": {
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "allocatedAddresses",
+                    "linkedAddresses",
+                    "unlinkedAddresses"
+                ]
+            },
+            "IPPoolStatus": {
+                "type": "object",
+                "properties": {
+                    "last_error": {
+                        "$ref": "#/components/schemas/LastError"
+                    },
+                    "progress": {
+                        "$ref": "#/components/schemas/IPPoolProgress"
+                    }
+                }
+            },
+            "NetPeeringSpec": {
+                "properties": {
+                    "netPeeringId": {
+                        "type": "string"
+                    }
+                },
+                "required": ["netPeeringId"],
+                "type": "object"
+            },
+            "NetPeeringStatus": {
+                "type": "object",
+                "properties": {
+                    "sourceNetId": {
+                        "type": "string"
+                    },
+                    "sourceOwnerId": {
+                        "type": "string"
+                    },
+                    "sourceIpRange": {
+                        "type": "string"
+                    },
+                    "accepterNetId": {
+                        "type": "string"
+                    },
+                    "accepterOwnerId": {
+                        "type": "string"
+                    },
+                    "accepterIpRange": {
+                        "type": "string"
+                    },
+                    "netPeeringState": {
+                        "type": "string"
+                    },
+                    "netPeeringMessage": {
+                        "type": "string"
+                    },
+                    "netPeeringExpirationDate": {
+                        "type": "string"
+                    }
+                }
+            },
+            "NetPeeringRequestSpec": {
+                "properties": {
+                    "accepterNetId": {
+                        "type": "string"
+                    },
+                    "accepterOwnerId": {
+                        "type": "string"
+                    },
+                    "persistent": {
+                        "type": "boolean",
+                        "x-go-type-skip-optional-pointer": true
+                    }
+                },
+                "required": ["accepterNetId", "accepterOwnerId"],
+                "type": "object"
+            },
+            "OOSAudit": {
+                "properties": {
+                    "readers": {
+                        "items": {
+                            "maxLength": 12,
+                            "minLength": 12,
+                            "pattern": "^[0-9]{12}$",
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "x-kubernetes-list-type": "set"
+                    }
+                },
+                "type": "object"
+            },
+            "OOSIaas": {
+                "properties": {
+                    "readers": {
+                        "items": {
+                            "maxLength": 12,
+                            "minLength": 12,
+                            "pattern": "^[0-9]{12}$",
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "x-kubernetes-list-type": "set"
+                    }
+                },
+                "type": "object"
+            },
+            "OOSAccessSpec": {
+                "properties": {
+                    "audit": {
+                        "$ref": "#/components/schemas/OOSAudit"
+                    },
+                    "iaas": {
+                        "$ref": "#/components/schemas/OOSIaas"
+                    }
+                },
+                "type": "object"
+            },
+            "OOSRetentionStatus": {
+                "type": "object",
+                "properties": {
+                    "enabled": {
+                        "type": "boolean"
+                    },
+                    "days": {
+                        "type": "integer"
+                    },
+                    "mode": {
+                        "type": "string"
+                    }
+                },
+                "required": ["enabled"]
+            },
+            "OOSRoleStatus": {
+                "type": "object",
+                "properties": {
+                    "bucketName": {
+                        "type": "string"
+                    },
+                    "retention": {
+                        "$ref": "#/components/schemas/OOSRetentionStatus"
+                    },
+                    "readers": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                    }
+                }
+            },
+            "OOSAccessStatus": {
+                "type": "object",
+                "properties": {
+                    "last_error": {
+                        "type": "object",
+                        "x-go-type": "LastError"
+                    },
+                    "roles": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/components/schemas/OOSRoleStatus"
+                        }
+                    },
+                    "managedRoles": {
+                        "type": "string"
+                    },
+                    "accessModes": {
+                        "type": "string"
+                    },
+                    "endpointURL": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ClientGatewayConfigurationStorage": {
+                "properties": {
+                    "configMapName": {
+                        "maxLength": 253,
+                        "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+                        "type": "string"
+                    },
+                    "namespace": {
+                        "maxLength": 63,
+                        "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+                        "type": "string"
+                    },
+                    "secretName": {
+                        "maxLength": 253,
+                        "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "PreSharedKey": {
+                "properties": {
+                    "secretKey": {
+                        "maxLength": 253,
+                        "pattern": "^[a-zA-Z0-9._-]+$",
+                        "type": "string"
+                    },
+                    "secretName": {
+                        "maxLength": 253,
+                        "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+                        "type": "string"
+                    },
+                    "secretNamespace": {
+                        "maxLength": 63,
+                        "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+                        "type": "string"
+                    }
+                },
+                "required": ["secretName", "secretNamespace", "secretKey"],
+                "type": "object"
+            },
+            "Phase2Options": {
+                "properties": {
+                    "preSharedKey": {
+                        "$ref": "#/components/schemas/PreSharedKey"
+                    }
+                },
+                "type": "object"
+            },
+            "VpnOptions": {
+                "properties": {
+                    "phase2Options": {
+                        "$ref": "#/components/schemas/Phase2Options"
+                    },
+                    "tunnelInsideIpRange": {
+                        "format": "cidr",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "VpnConnectionSpec": {
+                "properties": {
+                    "bgpASN": {
+                        "maximum": 4294967295,
+                        "minimum": 1,
+                        "type": "integer"
+                    },
+                    "clientGatewayConfigurationStorage": {
+                        "$ref": "#/components/schemas/ClientGatewayConfigurationStorage"
+                    },
+                    "publicIP": {
+                        "format": "ipv4",
+                        "type": "string"
+                    },
+                    "staticRoutesOnly": {
+                        "default": false,
+                        "type": "boolean"
+                    },
+                    "vpnOptions": {
+                        "$ref": "#/components/schemas/VpnOptions"
+                    },
+                    "vpnRoutes": {
+                        "items": {
+                            "format": "cidr",
+                            "type": "string"
+                        },
+                        "type": "array"
+                    }
+                },
+                "required": ["publicIP", "bgpASN"],
+                "type": "object"
+            },
+            "VpnConnectionStatus": {
+                "type": "object",
+                "properties": {
+                    "clientGatewayId": {
+                        "type": "string"
+                    },
+                    "clientGatewayState": {
+                        "type": "string"
+                    },
+                    "virtualGatewayId": {
+                        "type": "string"
+                    },
+                    "virtualGatewayState": {
+                        "type": "string"
+                    },
+                    "virtualGatewayLinkState": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}

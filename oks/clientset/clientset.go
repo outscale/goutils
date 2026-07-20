@@ -12,6 +12,7 @@ import (
 	fmt "fmt"
 	http "net/http"
 
+	oksv1beta "github.com/outscale/goutils/oks/clientset/typed/oks.dev/v1beta"
 	oksv1beta2 "github.com/outscale/goutils/oks/clientset/typed/oks.dev/v1beta2"
 	discovery "k8s.io/client-go/discovery"
 	rest "k8s.io/client-go/rest"
@@ -21,17 +22,24 @@ import (
 type Interface interface {
 	Discovery() discovery.DiscoveryInterface
 	OksV1beta2() oksv1beta2.OksV1beta2Interface
+	OksV1beta() oksv1beta.OksV1betaInterface
 }
 
 // Clientset contains the clients for groups.
 type Clientset struct {
 	*discovery.DiscoveryClient
 	oksV1beta2 *oksv1beta2.OksV1beta2Client
+	oksV1beta  *oksv1beta.OksV1betaClient
 }
 
 // OksV1beta2 retrieves the OksV1beta2Client
 func (c *Clientset) OksV1beta2() oksv1beta2.OksV1beta2Interface {
 	return c.oksV1beta2
+}
+
+// OksV1beta retrieves the OksV1betaClient
+func (c *Clientset) OksV1beta() oksv1beta.OksV1betaInterface {
+	return c.oksV1beta
 }
 
 // Discovery retrieves the DiscoveryClient
@@ -82,6 +90,10 @@ func NewForConfigAndClient(c *rest.Config, httpClient *http.Client) (*Clientset,
 	if err != nil {
 		return nil, err
 	}
+	cs.oksV1beta, err = oksv1beta.NewForConfigAndClient(&configShallowCopy, httpClient)
+	if err != nil {
+		return nil, err
+	}
 
 	cs.DiscoveryClient, err = discovery.NewDiscoveryClientForConfigAndClient(&configShallowCopy, httpClient)
 	if err != nil {
@@ -104,6 +116,7 @@ func NewForConfigOrDie(c *rest.Config) *Clientset {
 func New(c rest.Interface) *Clientset {
 	var cs Clientset
 	cs.oksV1beta2 = oksv1beta2.New(c)
+	cs.oksV1beta = oksv1beta.New(c)
 
 	cs.DiscoveryClient = discovery.NewDiscoveryClient(c)
 	return &cs

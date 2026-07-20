@@ -10,6 +10,8 @@ package fake
 
 import (
 	clientset "github.com/outscale/goutils/oks/clientset"
+	oksv1beta "github.com/outscale/goutils/oks/clientset/typed/oks.dev/v1beta"
+	fakeoksv1beta "github.com/outscale/goutils/oks/clientset/typed/oks.dev/v1beta/fake"
 	oksv1beta2 "github.com/outscale/goutils/oks/clientset/typed/oks.dev/v1beta2"
 	fakeoksv1beta2 "github.com/outscale/goutils/oks/clientset/typed/oks.dev/v1beta2/fake"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -69,7 +71,7 @@ func (c *Clientset) Tracker() testing.ObjectTracker {
 	return c.tracker
 }
 
-// IsWatchListSemanticsSupported informs the reflector that this client
+// IsWatchListSemanticsUnSupported informs the reflector that this client
 // doesn't support WatchList semantics.
 //
 // This is a synthetic method whose sole purpose is to satisfy the optional
@@ -88,4 +90,9 @@ var (
 // OksV1beta2 retrieves the OksV1beta2Client
 func (c *Clientset) OksV1beta2() oksv1beta2.OksV1beta2Interface {
 	return &fakeoksv1beta2.FakeOksV1beta2{Fake: &c.Fake}
+}
+
+// OksV1beta retrieves the OksV1betaClient
+func (c *Clientset) OksV1beta() oksv1beta.OksV1betaInterface {
+	return &fakeoksv1beta.FakeOksV1beta{Fake: &c.Fake}
 }

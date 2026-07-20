@@ -9,6 +9,7 @@ SPDX-License-Identifier: BSD-3-Clause
 package scheme
 
 import (
+	oksv1beta "github.com/outscale/goutils/oks/apis/oks.dev/v1beta"
 	oksv1beta2 "github.com/outscale/goutils/oks/apis/oks.dev/v1beta2"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
@@ -22,6 +23,7 @@ var Codecs = serializer.NewCodecFactory(Scheme)
 var ParameterCodec = runtime.NewParameterCodec(Scheme)
 var localSchemeBuilder = runtime.SchemeBuilder{
 	oksv1beta2.AddToScheme,
+	oksv1beta.AddToScheme,
 }
 
 // AddToScheme adds all types of this clientset into the given scheme. This allows composition
