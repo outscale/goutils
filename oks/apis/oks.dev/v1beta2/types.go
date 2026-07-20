@@ -1,3 +1,4 @@
+//nolint:modernize
 package v1beta2
 
 import (
@@ -13,8 +14,8 @@ type NodePool struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata"`
 
-	Spec   NodePoolSpec    `json:"spec"`
-	Status *NodePoolStatus `json:"status,omitempty"`
+	Spec   NodePoolSpec   `json:"spec"`
+	Status NodePoolStatus `json:"status,omitempty"`
 }
 
 // NodePoolList defines model for list of Nodepools.
