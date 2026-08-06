@@ -7423,6 +7423,46 @@ func (mr *MockClientMockRecorder) ReadVmsStateWithBody(ctx, contentType, body an
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReadVmsStateWithBody", reflect.TypeOf((*MockClient)(nil).ReadVmsStateWithBody), varargs...)
 }
 
+// ReadVmsStopHistory mocks base method.
+func (m *MockClient) ReadVmsStopHistory(ctx context.Context, body osc.ReadVmsStopHistoryJSONRequestBody, reqEditors ...middleware.MiddlewareChainOption) (*osc.ReadVmsStopHistoryResponse, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, body}
+	for _, a := range reqEditors {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ReadVmsStopHistory", varargs...)
+	ret0, _ := ret[0].(*osc.ReadVmsStopHistoryResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ReadVmsStopHistory indicates an expected call of ReadVmsStopHistory.
+func (mr *MockClientMockRecorder) ReadVmsStopHistory(ctx, body any, reqEditors ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, body}, reqEditors...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReadVmsStopHistory", reflect.TypeOf((*MockClient)(nil).ReadVmsStopHistory), varargs...)
+}
+
+// ReadVmsStopHistoryWithBody mocks base method.
+func (m *MockClient) ReadVmsStopHistoryWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...middleware.MiddlewareChainOption) (*osc.ReadVmsStopHistoryResponse, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, contentType, body}
+	for _, a := range reqEditors {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ReadVmsStopHistoryWithBody", varargs...)
+	ret0, _ := ret[0].(*osc.ReadVmsStopHistoryResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ReadVmsStopHistoryWithBody indicates an expected call of ReadVmsStopHistoryWithBody.
+func (mr *MockClientMockRecorder) ReadVmsStopHistoryWithBody(ctx, contentType, body any, reqEditors ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, contentType, body}, reqEditors...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReadVmsStopHistoryWithBody", reflect.TypeOf((*MockClient)(nil).ReadVmsStopHistoryWithBody), varargs...)
+}
+
 // ReadVmsWithBody mocks base method.
 func (m *MockClient) ReadVmsWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...middleware.MiddlewareChainOption) (*osc.ReadVmsResponse, error) {
 	m.ctrl.T.Helper()
