@@ -41,9 +41,9 @@ const (
 	// ResourceLifecycleOwned is the value we use when tagging resources to indicate
 	// that the resource is considered owned and managed by the cluster,
 	// and in particular that the lifecycle is tied to the lifecycle of the cluster.
-	ResourceLifecycleOwned = "owned"
+	ResourceLifecycleOwned ResourceLifecycle = "owned"
 	// ResourceLifecycleShared is the value we use when tagging resources to indicate
 	// that the resource is shared between multiple clusters, and should not be destroyed
 	// if the cluster is destroyed.
-	ResourceLifecycleShared = "shared"
+	ResourceLifecycleShared ResourceLifecycle = "shared"
 )
