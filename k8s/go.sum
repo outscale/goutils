@@ -24,8 +24,8 @@ github.com/mattn/go-isatty v0.0.20 h1:xfD0iDuEKnDkl03q4limB+vH+GxLEtL/jb4xVJSWWE
 github.com/mattn/go-isatty v0.0.20/go.mod h1:W+V8PltTTMOvKvAeJH7IuucS94S2C6jfK/D7dTCTo3Y=
 github.com/oapi-codegen/runtime v1.6.0 h1:7Xx+GlueD6nRuyKoCPzL434Jfi3BetbiJOrzCHp/VPU=
 github.com/oapi-codegen/runtime v1.6.0/go.mod h1:GwV7hC2hviaMzj+ITfHVRESK5J2W/GefVwIND/bMGvU=
-github.com/outscale/goutils/sdk v0.0.5 h1:UVu7uC38VOSCPqeCORsw1rKWaoHrsv+TTp6TGUHenjo=
-github.com/outscale/goutils/sdk v0.0.5/go.mod h1:LiXmAIA3CAXCdanEARKQ3Q/Lb8n8dKeGSbPRxIe43kc=
+github.com/outscale/goutils/sdk v0.0.6 h1:XxN2cVKxuqftD5jjnNDcYZZOwoHlvBBFKAw+JpxZOSs=
+github.com/outscale/goutils/sdk v0.0.6/go.mod h1:xybTmkur3i2UWb6POGrjUssyZICKZHDjfgsSdrwsXe8=
 github.com/outscale/osc-sdk-go/v3 v3.0.0-rc.4 h1:A/tYGv1FDtscUyGKjo9+ZMjSMLx2D8z6uatklJtzot4=
 github.com/outscale/osc-sdk-go/v3 v3.0.0-rc.4/go.mod h1:3lfuRe10qyX65byo8dmnnGAUhsThw8H14enH8d34yiI=
 github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 h1:Jamvg5psRIccs7FGNTlIRMkT8wgtp5eCXdBlqhYGL6U=
