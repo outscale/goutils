@@ -17,6 +17,12 @@ func GetClusterID(t []osc.ResourceTag) string {
 	return suffix
 }
 
+// HasClusterID checks tags for cluster ownership.
+func HasClusterID(t []osc.ResourceTag, id string) (bool, ResourceLifecycle) {
+	val, found := tags.GetValue(t, ClusterIDKey(id))
+	return found, ResourceLifecycle(val)
+}
+
 // ClusterIDKey returns the key for a cluster ID tag.
 func ClusterIDKey(id string) string {
 	return ClusterIDPrefix + id

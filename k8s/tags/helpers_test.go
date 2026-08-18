@@ -22,6 +22,19 @@ func TestGetClusterID(t *testing.T) {
 	assert.Equal(t, "37286b54-bb4b-46c8-ac8a-37621f1e7123", cid)
 }
 
+func TestHasClusterID(t *testing.T) {
+	cid := "37286b54-bb4b-46c8-ac8a-37621f1e7123"
+	tgs := []osc.ResourceTag{
+		{Key: "foo", Value: "bar"},
+		{Key: "OscK8sClusterID/" + cid, Value: "owned"},
+	}
+	ok, lifecycle := tags.HasClusterID(tgs, cid)
+	assert.True(t, ok)
+	assert.Equal(t, tags.ResourceLifecycleOwned, lifecycle)
+	nok, _ := tags.HasClusterID(tgs, "foo")
+	assert.False(t, nok)
+}
+
 func TestImports(t *testing.T) {
 	tgs := []osc.ResourceTag{
 		{Key: "foo", Value: "bar"},
