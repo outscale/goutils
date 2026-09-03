@@ -61,6 +61,7 @@ linters:
           - dogsled
           - musttag
           - perfsprint
+          - prealloc
   settings:
     lll:
       line-length: 160
