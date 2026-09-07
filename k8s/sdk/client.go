@@ -31,8 +31,9 @@ func NewSDKClient(ctx context.Context, ua string, opts ...Options) (*profile.Pro
 	}
 	lg := log.OAPILogger{}
 	copts := []middleware.MiddlewareChainOption{options.WithUseragent(ua), options.WithLogging(lg)}
+	var opt Options
 	if len(opts) > 0 {
-		opt := opts[0]
+		opt = opts[0]
 		// no default is set on RetryCount, it might be valid to run without backoff.
 		// ratelimiter is always configured. 0 values will be replaced by defaults.
 		err = mergo.Merge(&opt, Options{
@@ -49,8 +50,10 @@ func NewSDKClient(ctx context.Context, ua string, opts ...Options) (*profile.Pro
 	if err != nil {
 		return nil, nil, fmt.Errorf("unable to initialize OAPI client: %w", err)
 	}
-	if err := CheckCredentials(ctx, client); err != nil {
-		return nil, nil, err
+	if !opt.NoCheckAuth {
+		if err := CheckCredentials(ctx, client); err != nil {
+			return nil, nil, err
+		}
 	}
 	return prof, client, nil
 }
