@@ -28,6 +28,8 @@ type Options struct {
 	RateLimit                  int
 	RetryWaitMin, RetryWaitMax time.Duration
 	RetryCount                 int
+
+	NoCheckAuth bool
 }
 
 // AddFlags adds flags for SDK options to a flag set.
