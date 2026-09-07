@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/outscale/goutils/sdk/sanitize"
+	"github.com/outscale/osc-sdk-go/v3/pkg/iso8601"
 	"github.com/outscale/osc-sdk-go/v3/pkg/osc"
 	"github.com/outscale/osc-sdk-go/v3/pkg/profile"
 	"github.com/stretchr/testify/assert"
@@ -104,6 +105,22 @@ func TestStruct(t *testing.T) {
 		assert.NotEqual(t, sanitize.Redacted, *(*sanitized.Accounts)[0].AccountId, "non pii field must not have been redacted")
 		assert.Equal(t, sanitize.Redacted, *(*sanitized.Accounts)[0].FirstName, "pii field must have been redacted")
 		assert.NotEqual(t, sanitize.Redacted, *(*resp.Accounts)[0].FirstName, "source struct must not have been modified")
+	})
+	t.Run("Exported time fields are properly copied", func(t *testing.T) {
+		{
+			vm := osc.Vm{
+				CreationDate: iso8601.Now(),
+			}
+			sanitized := sanitize.Sanitize(vm)
+			assert.Equal(t, vm.CreationDate.String(), sanitized.CreationDate.String())
+		}
+		{
+			vm := osc.VmGroup{
+				CreationDate: new(iso8601.Now()),
+			}
+			sanitized := sanitize.Sanitize(vm)
+			assert.Equal(t, vm.CreationDate.String(), sanitized.CreationDate.String())
+		}
 	})
 }
 

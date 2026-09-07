@@ -4,6 +4,7 @@ import (
 	"reflect"
 	"regexp"
 	"strings"
+	"time"
 )
 
 type action struct {
@@ -139,10 +140,20 @@ func (s Sanitizer) sanitizeStruct(a action, v reflect.Value, withinMatch bool) r
 	if a.onField == nil && !withinMatch {
 		return v
 	}
+	// time.Time constains unexported fields that cannot be read/set
+	if v.Type() == reflect.TypeFor[time.Time]() {
+		if withinMatch {
+			return s.doSanitizeTime(v)
+		}
+		return v
+	}
 	nv := reflect.Indirect(reflect.New(v.Type()))
 	for field, value := range v.Fields() {
 		value = s.sanitizeValue(a, value, withinMatch || a.onField(field))
-		nv.FieldByName(field.Name).Set(value)
+		// currently, the only non exported fields are within time.Time structs
+		if field.IsExported() {
+			nv.FieldByName(field.Name).Set(value)
+		}
 	}
 	return nv
 }
@@ -158,6 +169,10 @@ func (s Sanitizer) doSanitizeString(a action, v reflect.Value) reflect.Value {
 		nstr = s.redact(v.String())
 	}
 	return reflect.ValueOf(nstr)
+}
+
+func (s Sanitizer) doSanitizeTime(v reflect.Value) reflect.Value {
+	return reflect.New(v.Type()).Elem()
 }
 
 // Default is a sanitizer with default options (strings, pii and sensitive).
