@@ -6,7 +6,6 @@ SPDX-License-Identifier: BSD-3-Clause
 package log
 
 import (
-	"bytes"
 	"context"
 	"fmt"
 	"io"
@@ -15,13 +14,20 @@ import (
 	"strings"
 	"time"
 
+	"github.com/outscale/goutils/sdk/sanitize"
 	"k8s.io/klog/v2"
 )
 
 const maxResponseLength = 500
 
-func clean(buf []byte) string {
-	return strings.ReplaceAll(string(buf), `"`, ``)
+func cleanBody(r io.ReadCloser) (string, error) {
+	defer r.Close() //nolint:errcheck
+	buf, err := io.ReadAll(r)
+	if err != nil {
+		return "", err
+	}
+
+	return strings.ReplaceAll(string(buf), `"`, ``), nil
 }
 
 func truncatedBody(body string) string {
@@ -38,18 +44,6 @@ func callName(r *http.Request) string {
 	return path.Base(r.URL.Path)
 }
 
-func requestBody(req *http.Request) ([]byte, error) {
-	body, err := req.GetBody()
-	if err != nil {
-		return nil, err
-	}
-	buf, err := io.ReadAll(body)
-	if err != nil {
-		return nil, err
-	}
-	return buf, nil
-}
-
 func (OAPILogger) Request(ctx context.Context, req any)   {}
 func (OAPILogger) Response(ctx context.Context, resp any) {}
 
@@ -58,21 +52,13 @@ func (l OAPILogger) RequestHttp(ctx context.Context, req *http.Request) {
 	if !logger.V(5).Enabled() {
 		return
 	}
-	body, err := requestBody(req)
+	req = sanitize.HTTPRequest(req)
+	body, err := cleanBody(req.Body)
 	if err != nil {
 		l.Error(ctx, fmt.Errorf("log request: %w", err))
 		return
 	}
-	logger.Info("OAPI request: "+clean(body), "OAPI", callName(req))
-}
-
-func responseBody(httpResp *http.Response) ([]byte, error) {
-	body, err := io.ReadAll(httpResp.Body)
-	if err != nil {
-		return nil, err
-	}
-	httpResp.Body = io.NopCloser(bytes.NewBuffer(body))
-	return body, nil
+	logger.Info("OAPI request: "+body, "OAPI", callName(req))
 }
 
 func (l OAPILogger) ResponseHttp(ctx context.Context, resp *http.Response, d time.Duration) {
@@ -81,17 +67,21 @@ func (l OAPILogger) ResponseHttp(ctx context.Context, resp *http.Response, d tim
 	if resp.StatusCode < 300 && !logger.V(5).Enabled() {
 		return
 	}
-	body, err := responseBody(resp)
+	resp = sanitize.HTTPResponse(resp) //nolint:bodyclose
+	body, err := cleanBody(resp.Body)
 	if err != nil {
 		l.Error(ctx, fmt.Errorf("log response: %w", err))
 		return
 	}
-	sbody := truncatedBody(clean(body))
 	switch {
 	case resp.StatusCode > 299:
-		logger.V(3).Info("OAPI error response: "+sbody, "OAPI", call, "http_status", resp.Status, "duration", d)
+		logger.V(3).Info("OAPI error response: "+body, "OAPI", call, "http_status", resp.Status, "duration", d)
 	case logger.V(5).Enabled(): // no error
-		logger.Info("OAPI response: "+sbody, "OAPI", call, "duration", d)
+		// do not truncate response in level 6
+		if !logger.V(6).Enabled() {
+			body = truncatedBody(body)
+		}
+		logger.Info("OAPI response: "+body, "OAPI", call, "duration", d)
 	}
 }
 
