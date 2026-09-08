@@ -14,7 +14,7 @@ func SetProfileDefaults(ctx context.Context) profile.Option {
 			var err error
 			prof.Region, err = GetRegion(ctx)
 			if err != nil {
-				return fmt.Errorf("unable to fetch metadata: %w", err)
+				return fmt.Errorf("unable to guess region: %w", err)
 			}
 		}
 		return nil

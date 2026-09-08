@@ -22,7 +22,7 @@ func Sanitize(l Logger) Logger {
 func (l *sanitizingLogger) Info(ctx context.Context, msg string, kv ...any) {
 	l.l.Info(
 		ctx,
-		sanitize.Sanitize(msg),
+		sanitize.String(msg),
 		lo.Map(kv, func(v any, _ int) any {
 			return sanitize.Sanitize(v)
 		}),
@@ -33,8 +33,8 @@ func (l *sanitizingLogger) Error(ctx context.Context, err error, msg string, kv 
 	l.l.Error(
 		ctx,
 		// Wrapped errors cannot be sanitized directly, as the underlying error is within a private field.
-		errors.New(sanitize.Sanitize(err.Error())),
-		sanitize.Sanitize(msg),
+		errors.New(sanitize.String(err.Error())),
+		sanitize.String(msg),
 		lo.Map(kv, func(v any, _ int) any {
 			return sanitize.Sanitize(v)
 		}),
