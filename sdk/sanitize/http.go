@@ -124,7 +124,7 @@ func (s HTTPSanitizer) SanitizeResponse(resp *http.Response) *http.Response {
 	nresp := &http.Response{}
 	*nresp = *resp
 	nresp.Header = resp.Header.Clone()
-	s.sanitizeMapSlice(resp.Header)
+	s.sanitizeMapSlice(nresp.Header)
 
 	buf, err := io.ReadAll(resp.Body)
 	if err != nil || resp.Request == nil {
