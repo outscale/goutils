@@ -64,6 +64,7 @@ linters:
           - musttag
           - perfsprint
           - prealloc
+          - protogetter
   settings:
     lll:
       line-length: 160
