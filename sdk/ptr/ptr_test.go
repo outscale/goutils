@@ -13,22 +13,27 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestTo(t *testing.T) {
-	p := ptr.To(1)
-	require.NotNil(t, p)
-	assert.Equal(t, 1, *p)
-}
-
 func TestFrom(t *testing.T) {
 	t.Run("From works with int", func(t *testing.T) {
 		assert.Equal(t, 0, ptr.From[int](nil))
-		assert.Equal(t, 1, ptr.From(ptr.To(1)))
+		assert.Equal(t, 2, ptr.From[int](nil, 2))
+		assert.Equal(t, 1, ptr.From(new(1)))
 	})
-	t.Run("From works with structx", func(t *testing.T) {
+	t.Run("From works with structs", func(t *testing.T) {
 		type foo struct{ a int }
 		assert.Equal(t, foo{}, ptr.From[foo](nil))
-		assert.Equal(t, foo{a: 1}, ptr.From(ptr.To(foo{a: 1})))
+		assert.Equal(t, foo{a: 1}, ptr.From(nil, foo{a: 1}))
+		assert.Equal(t, foo{a: 1}, ptr.From(&foo{a: 1}))
 	})
+}
+
+func TestFromMap(t *testing.T) {
+	var m map[string]string
+	m = ptr.FromMap(m)
+	require.NotNil(t, m)
+	assert.Equal(t, "", m["foo"])
+	m = ptr.FromMap(map[string]string{"foo": "bar"})
+	assert.Equal(t, "bar", m["foo"])
 }
 
 func TestEqual(t *testing.T) {
@@ -36,11 +41,11 @@ func TestEqual(t *testing.T) {
 		assert.True(t, ptr.Equal[int](nil, nil))
 	})
 	t.Run("nil, not nil and not nil, nil returns false", func(t *testing.T) {
-		assert.False(t, ptr.Equal[int](nil, ptr.To(1)))
-		assert.False(t, ptr.Equal[int](ptr.To(1), nil))
+		assert.False(t, ptr.Equal[int](nil, new(1)))
+		assert.False(t, ptr.Equal[int](new(1), nil))
 	})
 	t.Run("&a, &b return *a == *b", func(t *testing.T) {
-		assert.False(t, ptr.Equal[int](ptr.To(1), ptr.To(2)))
-		assert.True(t, ptr.Equal[int](ptr.To(1), ptr.To(1)))
+		assert.False(t, ptr.Equal[int](new(1), new(2)))
+		assert.True(t, ptr.Equal[int](new(1), new(1)))
 	})
 }
