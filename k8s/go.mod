@@ -6,7 +6,7 @@ toolchain go1.27.1
 
 require (
 	dario.cat/mergo v1.0.2
-	github.com/outscale/goutils/sdk v0.0.9
+	github.com/outscale/goutils/sdk v0.0.10
 	github.com/outscale/osc-sdk-go/v3 v3.0.0-rc.5
 	github.com/spf13/pflag v1.0.10
 	github.com/stretchr/testify v1.12.1
