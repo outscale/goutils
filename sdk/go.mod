@@ -6,7 +6,7 @@ toolchain go1.27.1
 
 require (
 	github.com/fatih/structtag v1.2.0
-	github.com/jarcoal/httpmock v1.4.1
+	github.com/jarcoal/httpmock v1.4.2
 	github.com/outscale/osc-sdk-go/v3 v3.0.0-rc.5
 	github.com/samber/lo v1.53.0
 	github.com/stretchr/testify v1.12.1
