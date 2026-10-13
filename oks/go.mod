@@ -2,7 +2,7 @@ module github.com/outscale/goutils/oks
 
 go 1.26.0
 
-toolchain go1.27.1
+toolchain go1.27.2
 
 require (
 	k8s.io/apimachinery v0.36.2
