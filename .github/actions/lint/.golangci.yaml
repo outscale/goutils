@@ -66,6 +66,10 @@ linters:
           - prealloc
           - protogetter
   settings:
+    staticcheck:
+      # Default: ["all", "-ST1000", "-ST1003", "-ST1016", "-ST1020", "-ST1021", "-ST1022"]
+      # QF1001 is added to the disabling list
+      checks: ["all", "-ST1000", "-ST1003", "-ST1016", "-ST1020", "-ST1021", "-ST1022", "-QF1001"]
     lll:
       line-length: 160
     usetesting:
