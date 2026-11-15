@@ -2,7 +2,7 @@ module github.com/outscale/goutils/sdk
 
 go 1.27.0
 
-toolchain go1.27.3
+toolchain go1.27.4
 
 require (
 	github.com/fatih/structtag v1.2.0
